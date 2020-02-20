@@ -18,7 +18,7 @@
           <!-- 文章内容 -->
           <div class="content">
             <div class="strategy">
-              <span>攻略：{{commentList.createdDate}}</span>
+              <span>攻略：{{commentList.created_at | momentFormat}}</span>
               <span>阅读：{{commentList.watch}}</span>
             </div>
 
@@ -29,7 +29,7 @@
               <div class="iconfont">
                 <div class="iconfontWrap">
                   <i class="iconpinglun iconimage"></i>
-                  <span>评论({{commentsLength}})</span>
+                  <span>评论({{commentLength}})</span>
                 </div>
                 <div class="iconfontWrap">
                   <i class="iconfenxiang iconimage"></i>
@@ -61,7 +61,7 @@
                 </div>
 
                 <!-- 评论组件 -->
-                <Comment />
+                <Comment :data="commentContent" />
               </div>
             </div>
           </div>
@@ -78,7 +78,6 @@
 
 <script>
 import Comment from "@/components/post/comment";
-import moment from "moment";
 export default {
   components: { Comment },
   data() {
@@ -87,7 +86,8 @@ export default {
       dialogVisible: false,
       textarea: "",
       commentList: "",
-      commentsLength:''
+      commentLength:'',
+      commentContent:''
     };
   },
   methods: {
@@ -100,7 +100,7 @@ export default {
     },
 
     // 获取文章内容
-    getComment() {
+    getContent() {
       this.$axios({
         url: "/posts",
         data: {
@@ -110,18 +110,26 @@ export default {
         let list = res.data.data.filter(e => {
           return e.id == this.$route.query.id;
         });
-
-        // 格式化日期
-        list[0].createdDate = moment(list[0].created_at).format(
-          "YYYY-MM-DD HH:mm"
-        )
         this.commentList = list[0];
-        this.commentsLength = this.commentList.comments.length
-        console.log(this.commentList);
       })
+    },
+
+    // 获取评论
+    getComment(){
+        this.$axios({
+            url: '/posts/comments',
+            data:{
+                id: this.$route.query.id
+            }
+        }).then(res=>{
+            this.commentContent = res.data.data
+            this.commentLength = res.data.total
+            console.log( this.commentContent);
+        })
     }
   },
   mounted() {
+    this.getContent()
     this.getComment()
   }
 };
@@ -175,9 +183,9 @@ export default {
   display: block;
 }
 /deep/.el-upload--picture-card {
-  width: 100px;
-  height: 100px;
-  line-height: 100px;
+  width: 102px;
+  height: 102px;
+  line-height: 102px;
 }
 
 /deep/.el-textarea__inner {
@@ -236,12 +244,13 @@ export default {
     .uploadImage {
       display: flex;
       justify-content: space-between;
+      margin-bottom: 10px;
       /deep/.el-button {
         height: 30px;
       }
       /deep/.el-upload-list--picture-card .el-upload-list__item {
-        width: 100px;
-        height: 100px;
+        width: 103px;
+        height: 103px;
       }
     }
   }
