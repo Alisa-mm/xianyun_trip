@@ -29,7 +29,7 @@
               <div class="iconfont">
                 <div class="iconfontWrap">
                   <i class="iconpinglun iconimage"></i>
-                  <span>评论({{commentLength}})</span>
+                  <span>评论({{total}})</span>
                 </div>
                 <div class="iconfontWrap">
                   <i class="iconfenxiang iconimage"></i>
@@ -62,6 +62,19 @@
 
                 <!-- 评论组件 -->
                 <Comment :data="commentContent" />
+
+                <!-- 分页 -->
+                <div class="pagin">
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="start / limit + 1"
+                    :page-sizes="[5, 10, 15, 20]"
+                    :page-size="limit"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="total"
+                  ></el-pagination>
+                </div>
               </div>
             </div>
           </div>
@@ -86,11 +99,16 @@ export default {
       dialogVisible: false,
       textarea: "",
       commentList: "",
-      commentLength:'',
-      commentContent:''
+      commentContent: "",
+      total: 0,
+      start: 0,
+      limit: 6
     };
   },
   methods: {
+    /**
+     * 图片上传
+     */
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
@@ -99,7 +117,9 @@ export default {
       this.dialogVisible = true;
     },
 
-    // 获取文章内容
+    /**
+     * 获取文章
+     */
     getContent() {
       this.$axios({
         url: "/posts",
@@ -111,26 +131,49 @@ export default {
           return e.id == this.$route.query.id;
         });
         this.commentList = list[0];
-      })
+      });
     },
 
-    // 获取评论
-    getComment(){
-        this.$axios({
-            url: '/posts/comments',
-            data:{
-                id: this.$route.query.id
-            }
-        }).then(res=>{
-            this.commentContent = res.data.data
-            this.commentLength = res.data.total
-            console.log( this.commentContent);
-        })
+    /**
+     * 选择展示的页数
+     */
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.limit = val
+      this.getComment()
+    },
+
+    /**
+     * 点击当前页
+     * _start: 起始的数据
+     * _limit:  数据的条数
+     */
+    handleCurrentChange(val) {
+      this.start = ( val - 1 ) * this.limit
+      this.getComment()
+    },
+
+    /**
+     * 获取评论
+     */
+    getComment() {
+      this.$axios({
+        url: "/posts/comments",
+        params: {
+          post: this.$route.query.id,
+          _start: this.start,
+          _limit: this.limit
+        }
+      }).then(res => {
+        this.commentContent = res.data.data;
+        this.total = Number(res.data.total);
+        console.log( this.commentContent);
+      });
     }
   },
   mounted() {
-    this.getContent()
-    this.getComment()
+    this.getContent();
+    this.getComment();
   }
 };
 </script>

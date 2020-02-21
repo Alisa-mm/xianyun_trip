@@ -1,45 +1,44 @@
 <template>
   <div class="comment">
-    <div class="commentHead" v-for="(item, index) in data" :key="index">
-        <img v-if="item.pics.length == 0" :src='$axios.defaults.baseURL + item.account.defaultAvatar' alt="" srcset="">
-        <img v-if="item.pics.length == 1" :src='item.pics.url' alt="" srcset="">
+    <div class="commentWrap" v-for="(item, index) in data" :key="index">
+      <div class="commentHead">
+        <img :src="$axios.defaults.baseURL + item.account.defaultAvatar" alt srcset />
         <p>{{item.account.nickname}}</p>
         <span>{{item.account.created_at | momentFormat}}</span>
+      </div>
+      <ComModule v-if="item.parent" :data="item.parent" />
+      <div class="commentContent">{{item.content}}</div>
     </div>
   </div>
 </template>
 
 <script>
-import moment from 'moment'
+import ComModule from "@/components/post/commentModule";
 export default {
-    name:'comment',
-    props:['data'],
-    data(){
-        return {
-            createdTime:''
-        }
-    },
-    mounted(){
-        console.log(this.data);
-        
-    }
-}
+  props: ["data"],
+  components: {
+    ComModule
+  }
+};
 </script>
 
 <style lang="less" scoped>
 .comment{
-    border:1px solid #eee;
-    .commentHead{
-        border-bottom: 1px dashed #eee;
-        display: flex;
-        align-items: top;
-        img{
-            width: 20px;
-            height: 20px;
-        }
-        p{
-            display: inline-block;
-        }
-    }
+  border: 1px solid #dddddd;
 }
+.commentWrap {
+  padding: 20px;
+  margin-bottom:10px;
+  border-bottom: 1px dashed #dddddd;
+  &:last-child{
+     border-bottom: 0;
+  }
+  .commentHead {
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
 </style>
