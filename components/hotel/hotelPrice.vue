@@ -1,0 +1,40 @@
+<template>
+  <div>
+    <el-row>
+      <el-table :data="data"
+                style="width: 100%">
+        <el-table-column prop="name"
+                         label="价格来源"
+                         width="420">
+        </el-table-column>
+        <el-table-column prop="bestType"
+                         label="低价房型"
+                         width="420">
+        </el-table-column>
+        <el-table-column prop="price"
+                         label="最低价格/每晚"
+                         width="160">
+        </el-table-column>
+      </el-table>
+    </el-row>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    data: {
+      type: Array,
+      default: () => []
+    }
+  },
+  computed: {
+    newData () {
+      return res
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+</style>
