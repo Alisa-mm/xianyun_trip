@@ -27,7 +27,6 @@
         suffix-icon="el-icon-date"
         v-model="NumberValue"
         class="NumberPeople"
-        @click="isShow"
       ></el-input>
 
       <el-card shadow="always" class="el-card">
@@ -63,6 +62,29 @@ export default {
       CityValue: "",  //切换城市
       stayTime: "",    //入住时间
       NumberValue: "", //人数
+      value:"",
+      
+      //模拟的数据
+      options:[
+        {
+          label:"1",
+          value:"1"
+        },
+        {
+          label:"2",
+          value:"2"
+        },
+        {
+          label:"3",
+          value:"3"
+        },
+        {
+          label:"4",
+          value:"4"
+        },
+      ],
+
+
 
       // 日期可选配置
       pickerOptions: {
@@ -74,7 +96,8 @@ export default {
     }
   },
   methods:{
-      
+      handleClick(){},
+
   }
 }
 </script>

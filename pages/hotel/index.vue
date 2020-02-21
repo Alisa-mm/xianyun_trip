@@ -6,8 +6,20 @@
     <!-- 区域信息 -->
     <el-row type="flex">
       <el-col :span="14">
-        <p>区域： 人民广场  顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶   顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶  顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶  顶顶顶顶顶顶顶顶顶顶顶</p>
-        <p>均价：@@@ ￥322  </p>
+        <div>区域：<span 
+        v-for="(item, index) in scenics"
+        :key="index"
+        class="site">
+        {{item.name}}
+        </span></div>
+        
+        均价：<span v-for="(item,index) in prices"
+        :key="index">
+          <i class="iconfont iconhuangguan"></i>
+          <i class="iconfont iconhuangguan"></i>
+          <i class="iconfont iconhuangguan"></i>
+          <span>￥{{item.price}}</span>
+        </span>
       </el-col>
       <el-col :span="10">
         <!-- 地图组件 -->
@@ -18,22 +30,10 @@
     <!-- 选择器 -->
     <HotelSelector/>
 
-    <el-row>
-      <el-col :span="8">
-        图片
-      </el-col>
-      <el-col :span="8">
-        <h2>如家快捷酒店</h2>
-        <p>ju jia juai jie hotel(fang zhou yan dian ) @@@ 经济型</p>
-        <p> *****   36条评价  46篇游记</p>
-        <p>位于：用法付付付付付付</p>
-      </el-col>
-      <el-col :span="8">
-        <div>携程 ￥<span>140</span>起></div>
-        <div>携程 ￥<span>140</span>起></div>
-        <div>携程 ￥<span>140</span>起></div>
-      </el-col>
-    </el-row>
+    <!-- 酒店详情 -->
+    <HotelDetails/>
+
+    
   </section>
 </template>
 
@@ -41,11 +41,72 @@
 import HotelFlights from "@/components/hotel/hotelFlights";
 import HotelMap from "@/components/hotel/hotelMap";
 import HotelSelector from "@/components/hotel/HotelSelector";
+import HotelDetails from "@/components/hotel/hotelDetails";
 export default {
+  data(){
+    return{
+      //酒店列表
+      scenics:[
+        {
+          name:"人民广场",
+          price:197
+        },
+        {
+          name:"城桥镇",
+          price:222
+        },
+        {
+          name:"金山区",
+          price:333
+        },
+        {
+          name:"新河镇",
+          price:197
+        },
+        {
+          name:"人民广南门场",
+          price:197
+        },
+      ],
+      prices:[
+        {
+          price:120
+        },
+        {
+          price:188
+        },
+        {
+          price:888
+        },
+      ]
+    }
+  },
+  //注册组件
   components:{
     HotelFlights,
     HotelSelector,
-    HotelMap
+    HotelMap,
+    HotelDetails
+  },
+
+  mounted(){
+    //页面一加载请求数据
+    this.getData();
+  },
+  methods:{
+    //请求数据
+    getData(){
+      this.$axios({
+        url:"cities",
+        //请求的参数
+        params:{
+          id:this.id,
+          name:this.name
+        }
+      }).then(res => {
+        console.log(this.data);
+      })
+    }
   }
 
 }
@@ -57,6 +118,11 @@ export default {
   margin:10px auto;
   .el-row{
     margin-top:20px;
+    span{
+      .iconfont{
+        color: #f7ba2a;
+      }
+    }
   }
 }
 
