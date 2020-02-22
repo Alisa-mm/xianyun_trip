@@ -6,14 +6,19 @@
       推荐攻略
     </h4>
     <el-button type="primary"
-               icon="el-icon-edit"> 写游记</el-button>
+               icon="el-icon-edit"
+               @click="handleClick"> 写游记</el-button>
     <div class="underline"></div>
   </el-row>
 </template>
 
 <script>
 export default {
-
+  methods: {
+    handleClick () {
+      this.$router.replace("/post/travelNotes")
+    }
+  }
 }
 </script>
 
