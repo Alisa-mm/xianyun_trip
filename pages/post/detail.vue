@@ -45,10 +45,12 @@
                 <!-- 图片上传 -->
                 <div class="uploadImage">
                   <el-upload
-                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :action="$axios.defaults.baseURL + '/upload'"
+                    name="files"
                     list-type="picture-card"
                     :on-preview="handlePictureCardPreview"
                     :on-remove="handleRemove"
+                    :on-success="handleImage"
                   >
                     <i class="el-icon-plus"></i>
                   </el-upload>
@@ -57,7 +59,7 @@
                     <img width="100%" :src="dialogImageUrl" alt />
                   </el-dialog>
 
-                  <el-button type="primary" size="small">提交</el-button>
+                  <el-button type="primary" size="small" @click="handleComment">提交</el-button>
                 </div>
 
                 <!-- 评论组件 -->
@@ -97,24 +99,37 @@ export default {
     return {
       dialogImageUrl: "",
       dialogVisible: false,
-      textarea: "",
-      commentList: "",
-      commentContent: "",
-      total: 0,
-      start: 0,
-      limit: 6
+      textarea: "", // 文本框内容
+      commentList: "", // 文章列表
+      commentContent: "", // 评论列表
+      total: 0, // 评论总数
+      start: 0, // 评论显示数据
+      limit: 6, // 显示的条数
+      imageUrl: [] // 保存的图片
     };
   },
   methods: {
     /**
-     * 图片上传
+     * 图片预览与删除
      */
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
+      this.imageUrl = file.name;
       this.dialogVisible = true;
+    },
+
+    /**
+     * 图片上传
+     */
+    handleImage(response, file, fileList) {
+      console.log(response);
+      console.log(file);
+      console.log(fileList);
+      
+      this.imageUrl = response 
     },
 
     /**
@@ -139,8 +154,8 @@ export default {
      */
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
-      this.limit = val
-      this.getComment()
+      this.limit = val;
+      this.getComment();
     },
 
     /**
@@ -149,8 +164,8 @@ export default {
      * _limit:  数据的条数
      */
     handleCurrentChange(val) {
-      this.start = ( val - 1 ) * this.limit
-      this.getComment()
+      this.start = (val - 1) * this.limit;
+      this.getComment();
     },
 
     /**
@@ -167,8 +182,32 @@ export default {
       }).then(res => {
         this.commentContent = res.data.data;
         this.total = Number(res.data.total);
-        console.log( this.commentContent);
+        console.log(this.commentContent);
       });
+    },
+
+    /**
+     * 发布评论
+     */
+    handleComment() {
+      this.$axios({
+        url: "/comments",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ` + this.$store.state.user.userInfo.token
+        },
+        data: {
+          content: this.textarea,
+          post: Number(this.$route.query.id),
+          pics: this.imageUrl
+        }
+      }).then(res => {
+        console.log(res);
+        this.$message.success("发表成功");
+      });
+      console.log(this.textarea);
+      console.log(this.imageUrl);
     }
   },
   mounted() {

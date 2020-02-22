@@ -1,13 +1,19 @@
 <template>
   <div class="comment">
     <div class="commentWrap" v-for="(item, index) in data" :key="index">
-      <div class="commentHead">
+      <div class="commentHeader">
         <img :src="$axios.defaults.baseURL + item.account.defaultAvatar" alt srcset />
         <p>{{item.account.nickname}}</p>
         <span>{{item.account.created_at | momentFormat}}</span>
       </div>
       <ComModule v-if="item.parent" :data="item.parent" />
-      <div class="commentContent">{{item.content}}</div>
+      <div @mouseenter="mouseHover" @mouseleave="mouseLeave">
+        <div v-for="(a,i) in item.pics" :key="i">
+          <img :src="$axios.defaults.baseURL + a.url" />
+        </div>
+        <div class="commentContent">{{item.content}}</div>
+        <a href="javascript:;" ref="aDom" v-show="blockShow">回复</a>
+      </div>
     </div>
   </div>
 </template>
@@ -18,27 +24,67 @@ export default {
   props: ["data"],
   components: {
     ComModule
+  },
+  data() {
+    return {
+      blockShow: false
+    };
+  },
+  methods: {
+    mouseHover(i) {
+      this.blockShow = true;
+    },
+    mouseLeave(i) {
+      this.blockShow = false;
+    }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.comment{
+.comment {
+  position: relative;
+  font-size: 12px;
   border: 1px solid #dddddd;
 }
 .commentWrap {
   padding: 20px;
-  margin-bottom:10px;
+  margin-bottom: 10px;
   border-bottom: 1px dashed #dddddd;
-  &:last-child{
-     border-bottom: 0;
+  &:last-child {
+    border-bottom: 0;
   }
-  .commentHead {
+  &:hover {
+    a {
+      display: block;
+    }
+  }
+  .commentHeader {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    p {
+      color: #666666;
+    }
+    span {
+      padding-left: 10px;
+      color: #666666;
+    }
     img {
       width: 30px;
       height: 30px;
     }
   }
-}
 
+  .commentContent {
+    padding-left: 30px;
+  }
+
+  a {
+    color: #1e50a2;
+    position: absolute;
+    right: 20px;
+    display: none;
+  }
+}
 </style>
