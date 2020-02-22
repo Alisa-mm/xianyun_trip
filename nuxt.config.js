@@ -33,7 +33,9 @@ export default {
   plugins: [
     '@/plugins/element-ui',
     { src: '@/plugins/localStorage', ssr: false },
-    "@/plugins/axios"
+    "@/plugins/axios",
+    { src: '~/plugins/VueEditor.js', mode: 'client' },
+    "@/plugins/momentFormat"
   ],
   /*
   ** Nuxt.js dev-modules
@@ -52,7 +54,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    // baseURL: "http://157.122.54.189:9095" // 新增备用地址
+    //baseURL: "http://157.122.54.189:9095" // 新增备用地址
     baseURL: "http://127.0.0.1:1337" // 新增axios默认请求路径 	
   },
   /*
