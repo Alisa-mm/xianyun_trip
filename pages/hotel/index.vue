@@ -97,18 +97,14 @@ export default {
     //请求数据
     getData(){
       this.$axios({
-        url:"cities",
-        //请求的参数
-        params:{
-          id:this.id,
-          name:this.name
-        }
-      }).then(res => {
-        console.log(this.data);
+        url:`cities?name=` + this.name
+      }).then(({data:res})=>{
+        this.hotelData = res.data[0]
+        // this.hotelScenice = res.data[0].scenics
+        console.log(this.hotelData);
       })
     }
   }
-
 }
 </script>
 
