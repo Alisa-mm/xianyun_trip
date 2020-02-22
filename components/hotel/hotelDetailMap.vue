@@ -98,15 +98,6 @@ export default {
   methods: {
     // 地图初始化
     mapInit () {
-      // let that = this
-      // MapLoader().then(AMap => {
-      //   that.map = new AMap.map('container', {
-      //     center: [118.02, 39.63],
-      //     zoom: 13
-      //   })
-      // }).catch(err => {
-      //   console.log('地图加载失败', err)
-      // })
       window.onLoad = () => {
         this.map = new AMap.Map("container", {
           center: this.mapCenter,
