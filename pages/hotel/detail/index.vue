@@ -11,19 +11,19 @@
 
     <!-- 标题 -->
     <el-row>
-      <h4 class="detail-title">{{ detailData.name }}</h4>
+      <h4 class="detail-title">{{ $store.state.hotel.detailData.name }}</h4>
     </el-row>
     <el-row>
-      <span class="detail-name">{{ detailData.alias }}</span>
+      <span class="detail-name">{{ $store.state.hotel.detailData.alias }}</span>
     </el-row>
     <el-row>
-      <i class="el-icon-location">{{ detailData.address }}</i>
+      <i class="el-icon-location">{{ $store.state.hotel.detailData.address }}</i>
     </el-row>
     <!-- 酒店图片 -->
     <HotelImage></HotelImage>
 
     <!-- 表格 -->
-    <HotelPrice :data="detailData.products"></HotelPrice>
+    <HotelPrice :data="$store.state.hotel.detailData.products"></HotelPrice>
 
     <!-- 地图&附近 -->
     <HotelDetailMap></HotelDetailMap>
@@ -39,8 +39,8 @@
             <el-row>
               <el-col :span="6">入住时间: 14:00之后</el-col>
               <el-col :span="6">离店时间: 12:00之前</el-col>
-              <el-col :span="6">{{ detailData.creation_time }} / {{ detailData.renovat_time }}</el-col>
-              <el-col :span="6">酒店规模: {{ detailData.roomCount }} 间客房</el-col>
+              <el-col :span="6">{{ $store.state.hotel.detailData.creation_time }} {{ $store.state.hotel.detailData.renovat_time? ' / ' + $store.state.hotel.detailData.renovat_time : $store.state.hotel.detailData.renovat_time }}</el-col>
+              <el-col :span="6">酒店规模: {{ $store.state.hotel.detailData.roomCount }} 间客房</el-col>
             </el-row>
           </el-col>
         </el-row>
@@ -53,7 +53,7 @@
             主要设施
           </el-col>
           <el-col :span="20">
-            <el-tag v-for="(item, key) in detailData.hotelassets"
+            <el-tag v-for="(item, key) in $store.state.hotel.detailData.hotelassets"
                     :key="key"
                     type="info">{{ item.name }}</el-tag>
           </el-col>
@@ -89,14 +89,14 @@
     <!-- 用户评论 -->
     <el-row class="comment-info">
       <el-row>
-        <h4>{{ detailData.common_remarks }} 条真实用户评论</h4>
+        <h4>{{ $store.state.hotel.detailData.common_remarks }} 条真实用户评论</h4>
       </el-row>
       <el-row>
         <!-- 评论数 -->
         <el-col :span="4">
-          <p>总评数：{{ detailData.all_remarks }}</p>
-          <p>差评数：{{ detailData.bad_remarks }}</p>
-          <p>好评数：{{ detailData.good_remarks }}</p>
+          <p>总评数：{{ $store.state.hotel.detailData.all_remarks }}</p>
+          <p>差评数：{{ $store.state.hotel.detailData.bad_remarks }}</p>
+          <p>好评数：{{ $store.state.hotel.detailData.good_remarks }}</p>
         </el-col>
         <!-- 星级 -->
         <el-col :span="5"
@@ -187,12 +187,17 @@ export default {
   methods: {
     getHotelData () {
       // api http://157.122.54.189:9095/hotels?id=185
-      this.$axios({
-        url: `/hotels?id=` + this.id
-      }).then(({ data: res }) => {
-        this.detailData = res.data[0]
+      /*  this.$axios({
+         url: `/hotels?id=` + this.id
+       }).then(({ data: res }) => {
+         this.detailData = res.data[0]
+         this.comm_score = res.data[0].scores
+         console.log(this.detailData)
+       }) */
+      this.$store.dispatch('hotel/findHotelData', this.id).then((res) => {
         this.comm_score = res.data[0].scores
-        console.log(this.detailData)
+        console.log(this.comm_score)
+
       })
 
     }
