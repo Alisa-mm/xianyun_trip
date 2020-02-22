@@ -62,7 +62,6 @@
 </template>
 
 <script>
-import MapLoader from "@/plugins/aMap.js"
 export default {
   data () {
     return {
