@@ -107,6 +107,7 @@
                    text-color="#ff9900">
             {{comm_score.environment}}
           </el-rate>
+          <div class="stamp">推荐</div>
         </el-col>
         <!-- 评分 -->
         <el-col :span="5"
@@ -117,7 +118,7 @@
                        :show-text="false"
                        :width="80"></el-progress>
           <div class="comment-info">
-            <span>产品</span><span>{{ comm_score.environment }}</span>
+            <span>环境</span><span>{{ comm_score.environment }}</span>
           </div>
         </el-col>
         <el-col :span="5"
@@ -139,7 +140,7 @@
                        :show-text="false"
                        :width="80"></el-progress>
           <div class="comment-info">
-            <span>产品</span><span>{{ comm_score.service }}</span>
+            <span>服务</span><span>{{ comm_score.service }}</span>
           </div>
         </el-col>
       </el-row>
@@ -252,6 +253,25 @@ export default {
         }
       }
     }
+    .stamp {
+      position: absolute;
+      left: 20px;
+      top: -3px;
+      border: 2px solid #fa3;
+      text-align: center;
+      line-height: 70px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      opacity: 0.25;
+      transform: rotate(-30deg);
+      font-size: x-large;
+      color: #f90;
+    }
   }
+}
+/deep/.el-progress-circle__path {
+  stroke: rgb(255, 153, 0) !important;
+  stroke-width: 3 !important;
 }
 </style>

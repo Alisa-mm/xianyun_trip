@@ -24,9 +24,12 @@
           <ul>
             <li v-for="(item,index) in menus[index].children"
                 :key="index">
-              <a href="JavaScript:void(0)"><em>{{index+1}}</em></a>
-              <a href="JavaScript:void(0)"><i>{{item.city}}</i></a>
-              <a href="JavaScript:void(0)"><span>{{item.desc}}</span></a>
+              <a href="JavaScript:void(0)"
+                 @click="handleClick(item.city)"><em>{{index+1}}</em></a>
+              <a href="JavaScript:void(0)"
+                 @click="handleClick(item.city)"><i>{{item.city}}</i></a>
+              <a href="JavaScript:void(0)"
+                 @click="handleClick(item.city)"><span>{{item.desc}}</span></a>
             </li>
           </ul>
         </div>
@@ -73,6 +76,15 @@ export default {
     },
     keepnoShow () {
       this.isShow = false
+    },
+    handleClick (city) {
+      this.$store.commit("post/setCity", city)
+      this.$router.push({
+        path: "/post",
+        query: {
+          city: city
+        }
+      })
     }
   }
 }

@@ -11,7 +11,21 @@
                      :format-tooltip="formatTooltip"></el-slider>
         </div>
       </el-col>
-
+      <el-col :span="18"
+              class="tiaoJian">
+        <div class="grid-content">
+          <div>住宿等级</div>
+          <div class="borderHidden">
+            <el-select v-model="type"
+                       multiple
+                       collapse-tags
+                       class="select"
+                       placeholder="请选择">
+              <el-option v-for="(item,index) in levels"
+                         :key="index"
+                         :label="item.name"
+                         :value="item.level"></el-option>
+              <!-- =======
       <el-col :span="18"
               class="tiaoJian">
         <div class="grid-content bg-purple">
@@ -23,9 +37,24 @@
                        :key="index"
                        :label="item.level"
                        :value="item.name"></el-option>
-          </el-select>
+>>>>>>> 4023bf25d09340e844ebe4806ec80e06a77fc8cd -->
+            </el-select>
+          </div>
         </div>
 
+        <!-- <<<<<<< HEAD -->
+        <div class="grid-content">
+          <div>住宿类型</div>
+          <div class="borderHidden">
+            <el-select v-model="grade"
+                       multiple
+                       collaps-tags
+                       placeholder="请选择">
+              <el-option v-for="(item,index) in types"
+                         :key="index"
+                         :label="item.name"
+                         :value="item.id"></el-option>
+              <!-- =======
         <div class="grid-content bg-purple-light">
           <div>住宿等级</div>
           <el-select v-model="grade"
@@ -35,11 +64,24 @@
                        :key="index"
                        :label="item.level"
                        :value="item.name"></el-option>
-          </el-select>
+>>>>>>> 4023bf25d09340e844ebe4806ec80e06a77fc8cd -->
+            </el-select>
+          </div>
         </div>
 
-        <div class="grid-content bg-purple-light">
+        <div class="grid-content">
           <div>酒店设施</div>
+          <!-- <<<<<<< HEAD -->
+          <div class="borderHidden">
+            <el-select v-model="facility"
+                       multiple
+                       collaps-tags
+                       placeholder="请选择">
+              <el-option v-for="(item,index) in assets"
+                         :key="index"
+                         :label="item.name"
+                         :value="item.id"></el-option>
+              <!-- =======
           <el-select v-model="facility"
                      class="select"
                      placeholder="请选择">
@@ -47,11 +89,23 @@
                        :key="index"
                        :label="item.id"
                        :value="item.name"></el-option>
-          </el-select>
+>>>>>>> 4023bf25d09340e844ebe4806ec80e06a77fc8cd -->
+            </el-select>
+          </div>
         </div>
 
-        <div class="grid-content bg-purple">
+        <div class="grid-content">
           <div>酒店品牌</div>
+          <div class="borderHidden">
+            <el-select v-model="brand"
+                       multiple
+                       collaps-tags
+                       placeholder="请选择">
+              <el-option v-for="(item,index) in brands"
+                         :key="index"
+                         :label="item.name"
+                         :value="item.id"></el-option>
+              <!-- =======
           <el-select v-model="brand"
                      class="select"
                      placeholder="请选择">
@@ -59,7 +113,9 @@
                        :key="index"
                        :label="item.id"
                        :value="item.name"></el-option>
-          </el-select>
+>>>>>>> 4023bf25d09340e844ebe4806ec80e06a77fc8cd -->
+            </el-select>
+          </div>
         </div>
       </el-col>
     </el-row>
@@ -70,86 +126,50 @@
 export default {
   data () {
     return {
-      price: 100,  //价格
-      grade: "",  //酒店等级
+      price: 0,  //价格
+      grade: 0,  //酒店等级
       type: "",   //酒店类型
       facility: "", //酒店设施
       brand: "",  //就地按品牌
 
-      //模拟数据
       //酒店等级
-      levels: [
-        {
-          level: 1,
-          name: "1星"
-        },
-        {
-          level: 2,
-          name: "2星"
-        },
-        {
-          level: 3,
-          name: "3星"
-        },
-      ],
+      levels: [],
       //住宿类型
-      types: [
-        {
-          id: 1,
-          name: "舒适型"
-        },
-        {
-          id: 2,
-          name: "高档型"
-        },
-        {
-          id: 3,
-          name: "豪华型"
-        },
-      ],
-
+      types: [],
       //酒店设施
-      assets: [
-        {
-          id: 1,
-          name: "wifi",
-          type: "房间设施"
-        },
-        {
-          id: 2,
-          name: "热水壶",
-          type: "房间设施"
-        },
-        {
-          id: 3,
-          name: "吹风机",
-          type: "房间设施"
-        },
-      ],
+      assets: [],
       //酒店品牌
-      brands: [
-        {
-          id: 1,
-          name: "七天连锁"
-        },
-        {
-          id: 2,
-          name: "汉庭"
-        },
-        {
-          id: 3,
-          name: "余家"
-        },
-      ]
+      brands: []
     }
   },
 
-  mounted () { },
+  mounted () {
+    //页面一加载请求数据
+    this.hotelData()
+  },
   methods: {
-    //换条价格
+    //滑条价格
     formatTooltip (val) {
       return val * 40
+    },
+
+    //请求数据额
+    hotelData () {
+      this.$axios({
+        url: "/hotels/options"
+      }).then(({ data: res }) => {
+        console.log(res.data)
+        //酒店等级
+        this.levels = res.data.levels
+        //酒店类型
+        this.types = res.data.types
+        //酒店设施
+        this.assets = res.data.assets
+        //酒店品牌
+        this.brands = res.data.brands
+      })
     }
+
   }
 }
 </script>
@@ -174,6 +194,15 @@ export default {
     .grid-content {
       padding: 0 15px;
       border-left: 1px solid #dcdfe6;
+      .borderHidden {
+        width: 150px;
+        float: right;
+        overflow: hidden;
+        .el-select {
+          width: 160px;
+          margin: -1px;
+        }
+      }
     }
   }
 }

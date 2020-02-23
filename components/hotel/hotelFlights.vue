@@ -1,6 +1,5 @@
 <template>
   <section class="contianer">
-
     <!-- 条件筛选 -->
     <el-form class="form">
       <el-input placeholder="切换城市"
@@ -18,10 +17,9 @@
 
       <!-- 人数 -->
       <el-input placeholder="人数未定"
-                suffix-icon="el-icon-date"
+                suffix-icon="el-input_icon iconfont iconuser"
                 v-model="NumberValue"
                 class="NumberPeople"></el-input>
-
       <el-card shadow="always"
                class="el-card">
         <span>每件</span>
@@ -40,11 +38,14 @@
                      :label="item.label"
                      :value="item.value"></el-option>
         </el-select>
+
+        <div class="hr"></div>
+
+        <el-button type="primary">确定</el-button>
       </el-card>
 
       <el-button type="primary"
-                 class="btn"
-                 @click="handleClick">查询价格</el-button>
+                 class="btn">查询价格</el-button>
     </el-form>
   </section>
 </template>
@@ -90,12 +91,16 @@ export default {
     }
   },
   methods: {
+    // 点击隐藏显示
+    handeHidden () {
+
+    },
+    // 筛选
     handleClick () {
       if (this.CityValue !== '') {
         this.$emit('searchCity', this.CityValue)
       }
     },
-
   }
 }
 </script>
@@ -119,11 +124,36 @@ export default {
     margin-right: 10px;
   }
   .NumberPeople {
+    // position: relative;
+
     width: 200px;
     margin-right: 15px;
   }
   .el-card {
+    position: absolute;
+    top: 170px;
+    right: 335px;
     display: none;
+    width: 300px;
+    height: 200px;
+    z-index: 2368;
+    .el-select {
+      width: 100px;
+    }
+    .hr {
+      margin: 20px 0;
+      border-top: 1px solid #dcdfe6;
+    }
+    .el-button {
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 3px;
+      width: 58px;
+      height: 30px;
+      // line-height: 28px;
+      text-align: center;
+      margin-left: 200px;
+    }
   }
   .btn {
     font-size: 14px;
