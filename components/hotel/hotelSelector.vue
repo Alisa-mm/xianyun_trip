@@ -70,11 +70,11 @@
 export default {
   data () {
     return {
-      price:"",  //价格
-      grade:"",  //酒店等级
-      type:"",   //酒店类型
-      facility:"", //酒店设施
-      brand:"",  //就地按品牌
+      price: "",  //价格
+      grade: "",  //酒店等级
+      type: "",   //酒店类型
+      facility: "", //酒店设施
+      brand: "",  //就地按品牌
 
       //模拟数据
       //酒店等级
@@ -144,8 +144,8 @@ export default {
     }
   },
 
-  mounted(){},
-  methods:{}
+  mounted () { },
+  methods: {}
 }
 </script>
 
@@ -158,9 +158,10 @@ export default {
     height: 100%;
     border-right: 1px solid #dcdfe6;
     padding: 0 10px;
-    .bg-purple-light {
-      .select{
-        border:none;
+    .grid-content {
+      .el-select {
+        border: 0;
+        background: #fff;
       }
     }
   }

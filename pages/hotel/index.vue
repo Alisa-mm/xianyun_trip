@@ -15,9 +15,7 @@
         
         均价：<span v-for="(item,index) in prices"
         :key="index">
-          <i class="iconfont iconhuangguan"></i>
-          <i class="iconfont iconhuangguan"></i>
-          <i class="iconfont iconhuangguan"></i>
+          <i class="iconfont iconhuangguan" v-for="(item,index) in 3" :key="index"></i>
           <span>￥{{item.price}}</span>
         </span>
       </el-col>

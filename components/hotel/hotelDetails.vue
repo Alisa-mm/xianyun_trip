@@ -2,25 +2,23 @@
   <section class="hotelDetails">
     <el-row v-for="(item,index) in data" :key="index">
       <el-col :span="6">{{item.photos}}</el-col>
-      <el-col :span="12">
+      <el-col :span="12" class="hotelXQ">
         <h2>{{item.name}}</h2>
-        <div>
-          {{item.alias}}
-          <i class="iconfont iconhuangguan"></i>
-          <i class="iconfont iconhuangguan"></i>
-          <i class="iconfont iconhuangguan"></i>
+        <div class="alias">
+          <span>{{item.alias}}</span>
+          <i class="iconfont iconhuangguan" v-for="(item,index) in 3" :key="index"></i>
           经济型
         </div>
-        <div>
+        <div class="pingFen">
           <el-rate
-            v-model="value"
+            v-model="value5"
             disabled
             show-score
             text-color="#ff9900"
             score-template="{value}"
           ></el-rate>
-          36条评价 
-          46篇游记
+          <span>36<i>条评价</i></span>
+          <span>46<i>篇游记</i></span>
         </div>
         <div>{{item.address}}</div>
       </el-col>
@@ -46,7 +44,7 @@
 export default {
   data () {
     return {
-      value:8,
+      value5: 3.7,
       data: [
         {
           photos: "图片",
@@ -66,5 +64,38 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+.hotelDetails{
+  margin-top:20px;
+  .el-row{
+    margin-bottom:15px;
+    padding-bottom:15px;
+    border-bottom:1px solid #ddd;
+    .hotelXQ{
+      h2{
+        font-size:x-large;
+        font-weight:400;
+        color:inherit;
+      }
+      .alias{     
+          font-size:16px;
+          margin-bottom:10px;
+          color:#999;
+          .iconfont{
+            color:#ff9900;
+          }
+      }
+    }
+    .pingFen{
+      display:flex;
+      justify-content: flex-start;
+      font-size:16px;
+      color:#ff9900;
+      margin-bottom:10px;
+      span{
+        margin-left:50px;
+      }
+    }
+  }
+}
 </style>
