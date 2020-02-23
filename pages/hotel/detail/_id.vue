@@ -117,7 +117,7 @@
                        :show-text="false"
                        :width="80"></el-progress>
           <div class="comment-info">
-            <span>产品</span><span>{{ comm_score.environment }}</span>
+            <span>环境</span><span>{{ comm_score.environment }}</span>
           </div>
         </el-col>
         <el-col :span="5"
@@ -139,7 +139,7 @@
                        :show-text="false"
                        :width="80"></el-progress>
           <div class="comment-info">
-            <span>产品</span><span>{{ comm_score.service }}</span>
+            <span>服务</span><span>{{ comm_score.service }}</span>
           </div>
         </el-col>
       </el-row>
@@ -253,5 +253,9 @@ export default {
       }
     }
   }
+}
+/deep/.el-progress-circle__path {
+  stroke: rgb(255, 153, 0) !important;
+  stroke-width: 3 !important;
 }
 </style>
