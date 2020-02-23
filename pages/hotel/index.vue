@@ -30,8 +30,7 @@
 
     <!-- 酒店详情 -->
     <HotelDetails/>
-
-    
+   
   </section>
 </template>
 
@@ -90,6 +89,9 @@ export default {
   mounted(){
     //页面一加载请求数据
     this.getData();
+    //弹窗提示
+    this.open();
+
   },
   methods:{
     //请求数据
@@ -101,7 +103,15 @@ export default {
         // this.hotelScenice = res.data[0].scenics
         console.log(this.hotelData);
       })
-    }
+    },
+
+    //弹窗提示
+    open() {
+        this.$alert('定位当前的城市：广州市', '提示', {
+          confirmButtonText: '确定',
+          type: 'success' 
+        });
+      }
   }
 }
 </script>
