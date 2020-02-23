@@ -63,7 +63,7 @@
       </el-col>
       <el-col :span="10">
         <!-- 地图组件 -->
-        <!-- <HotelMap @location="location" /> -->
+        <HotelMap @location="location" />
       </el-col>
     </el-row>
 
@@ -79,7 +79,7 @@
 <script>
 import HotelFlights from "@/components/hotel/hotelFlights";
 import HotelMap from "@/components/hotel/hotelMap";
-import HotelSelector from "@/components/hotel/HotelSelector";
+import HotelSelector from "@/components/hotel/hotelSelector";
 import HotelDetails from "@/components/hotel/hotelDetails";
 export default {
   data () {
