@@ -129,10 +129,7 @@ export default {
           status,
           result
         ) {
-
-          console.log(result)
           _that.sceneryList = result.poiList
-
         });
       });
     },
