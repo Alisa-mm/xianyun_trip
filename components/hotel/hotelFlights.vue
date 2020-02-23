@@ -5,7 +5,7 @@
     <el-form class="form">
       <el-input placeholder="切换城市"
                 class="switchCity"
-                v-model="CityValue"></el-input>
+                v-model.trim="CityValue"></el-input>
 
       <!-- 住宿时间 -->
       <el-date-picker type="daterange"
@@ -90,7 +90,11 @@ export default {
     }
   },
   methods: {
-    handleClick () { },
+    handleClick () {
+      if (this.CityValue !== '') {
+        this.$emit('searchCity', this.CityValue)
+      }
+    },
 
   }
 }

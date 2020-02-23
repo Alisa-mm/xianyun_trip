@@ -52,6 +52,7 @@ export default {
           // 是否使用高精度定位，默认：true
           enableHighAccuracy: true,
           // 设置定位超时时间，默认：无穷大
+          // center: [116.39428, 16.90923],  //中心坐标s
           timeout: 10000,
           // 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
           buttonOffset: new AMap.Pixel(10, 20),
