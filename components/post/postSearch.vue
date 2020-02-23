@@ -19,6 +19,7 @@
          @click="advance('上海')">上海 </a><a href="JavaScript:void(0)"
          @click="advance('北京')">北京</a>
     </div>
+    {{updateName}}
   </div>
 </template>
 
@@ -30,6 +31,12 @@ export default {
       state4: '',
       timeout: null,
       city: ""
+    }
+  },
+  computed: {
+    updateName () {
+      this.city = this.$store.state.post.city;
+      return '';
     }
   },
   methods: {
