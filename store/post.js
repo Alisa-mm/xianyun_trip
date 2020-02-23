@@ -1,7 +1,9 @@
 export const state=()=>{
     return {
         //放一个数组存储保存到草稿的数据
-        draft:[]
+        draft:[],
+        // 传给postitem需要筛选的城市
+        city:""
     }
 }
 
@@ -13,5 +15,9 @@ export const mutations={
     // 删除草稿
     delDraftData(state, index) {
         state.draft.splice(index, 1)
+      },
+      //更改city的值
+      setCity(state,data) {
+          state.city =data
       }
 }
