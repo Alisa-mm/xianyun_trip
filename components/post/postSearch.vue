@@ -33,9 +33,21 @@ export default {
   methods: {
     handleClick () {
       this.$store.commit("post/setCity", this.city)
+      this.$router.push({
+        path: "/post",
+        query: {
+          city: this.city
+        }
+      })
     },
     advance (city) {
       this.$store.commit("post/setCity", city)
+      this.$router.push({
+        path: "/post",
+        query: {
+          city: city
+        }
+      })
     }
   }
 }

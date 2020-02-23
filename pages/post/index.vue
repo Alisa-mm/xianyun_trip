@@ -68,6 +68,13 @@ export default {
       // console.log(this.$store.state.post.city)
     }
   },
+  beforeRouteUpdate (to, from, next) {
+    // 每次url变化时候把pageIndex初始化为1
+    this.pageIndex = 1;
+
+    // 跳转到下一页
+    next();
+  },
   computed: {
     newDataList () {
       var arr = []
