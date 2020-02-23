@@ -2,13 +2,15 @@
   <div class="postItem">
     <div class="postItem0 poststyle"
          v-if="data.images.length == 0">
-      <h4><a href="JavaScript:void(0)">{{data.title}}</a></h4>
-      <p><a href="JavaScript:void(0)">{{data.summary}}</a></p>
+      <h4><a href="#"
+           @click="handleClick(data.id)">{{data.title}}</a></h4>
+      <p><a href="JavaScript:void(0)"
+           @click="handleClick(data.id)">{{data.summary}}</a></p>
       <el-row class="footer"
               type="flex">
         <div style="flex:1">
           <span style="width:53px;margin-right:10px"><i class="el-icon-location"></i>{{data.city.name}}</span>
-          <span style="align:center;">by <a href="JavaScript:void(0)"><img :src="$axios.defaults.baseURL + $store.state.user.userInfo.user.defaultAvatar"
+          <span style="align:center;">by <a href="/user/personal"><img :src="$axios.defaults.baseURL + $store.state.user.userInfo.user.defaultAvatar"
                    style="width:16px;height:16px;margin:5px;vertical-align: middle;"
                    class="userhead" />
               <span style="color:orange;">{{$store.state.user.userInfo.user.nickname}}</span></a></span>
@@ -26,13 +28,15 @@
              alt=""
              style="margin-right:10px;">
         <div class="info">
-          <h4 style="white-space:nowrap;"><a href="JavaScript:void(0)">{{data.title}}</a></h4>
-          <p style="height:82px;margin:0 0 15px;overflow: hidden;"><a href="JavaScript:void(0)">{{data.summary}}</a></p>
+          <h4 style="white-space:nowrap;"><a href="JavaScript:void(0)"
+               @click="handleClick(data.id)">{{data.title}}</a></h4>
+          <p style="height:82px;margin:0 0 15px;overflow: hidden;"><a href="JavaScript:void(0)"
+               @click="handleClick(data.id)">{{data.summary}}</a></p>
           <el-row class="footer"
                   type="flex">
             <div style="flex:1">
               <span style="width:53px;margin-right:10px"><i class="el-icon-location"></i>{{data.city.name}}</span>
-              <span style="align:center;">by <a href="JavaScript:void(0)"><img :src="$axios.defaults.baseURL + $store.state.user.userInfo.user.defaultAvatar"
+              <span style="align:center;">by <a href="/user/personal"><img :src="$axios.defaults.baseURL + $store.state.user.userInfo.user.defaultAvatar"
                        style="width:16px;height:16px;margin:5px;vertical-align: middle;"
                        class="userhead" />
                   <span style="color:orange;">{{$store.state.user.userInfo.user.nickname}}</span></a></span>
@@ -46,10 +50,12 @@
     <div class="postItem2 poststyle"
          v-if="data.images.length > 1">
       <h4>
-        <nuxt-link to="JavaScript:void(0)">{{data.title}}</nuxt-link>
+        <a href="JavaScript:void(0)"
+           @click="handleClick(data.id)">{{data.title}}</a>
       </h4>
       <p style="height:63px;overflow:hidden;">
-        <nuxt-link to="JavaScript:void(0);">{{data.summary}}</nuxt-link>
+        <a href="JavaScript:void(0)"
+           @click="handleClick(data.id)">{{data.summary}}</a>
       </p>
       <el-row class="pics"
               type="flex"
@@ -63,7 +69,7 @@
               type="flex">
         <div style="flex:1">
           <span style="width:53px;margin-right:10px"><i class="el-icon-location"></i>{{data.city.name}}</span>
-          <span style="align:center;">by <a href="JavaScript:void(0)"><img :src="$axios.defaults.baseURL + $store.state.user.userInfo.user.defaultAvatar"
+          <span style="align:center;">by <a href="/user/personal"><img :src="$axios.defaults.baseURL + $store.state.user.userInfo.user.defaultAvatar"
                    style="width:16px;height:16px;margin:5px;vertical-align: middle;"
                    class="userhead" />
               <span style="color:orange;">{{$store.state.user.userInfo.user.nickname}}</span></a></span>
@@ -81,6 +87,16 @@ export default {
   ,
   mounted () {
     // console.log(this.data)
+  },
+  methods: {
+    handleClick (id) {
+      this.$router.push({
+        path: "/post/detail",
+        query: {
+          id
+        }
+      })
+    }
   },
   data () {
     return {
@@ -110,6 +126,7 @@ export default {
   }
   .pics {
     justify-content: space-between;
+    margin: 15px 0;
   }
   p {
     height: 63px;

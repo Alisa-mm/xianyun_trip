@@ -22,7 +22,7 @@
       </div>
 
       <div class="post-list">
-        <PostItem v-for="(item,index) in dataList"
+        <PostItem v-for="(item,index) in newDataList"
                   :key="index"
                   :data="item"></PostItem>
         <el-pagination @size-change="handleSizeChange"
@@ -34,6 +34,7 @@
                        :total="postData.total">
         </el-pagination>
       </div>
+      <!-- {{newDataList}} -->
     </div>
   </el-row>
 </template>
@@ -46,6 +47,7 @@ import PostItem from "@/components/post/postItem"
 export default {
   data () {
     return {
+      searchCity: '',
       pageIndex: 1,
       pageSize: 3,
       postData: {
@@ -63,19 +65,39 @@ export default {
     handleCurrentChange (val) {
       // console.log(`当前页: ${val}`);
       this.pageIndex = val
+      // console.log(this.$store.state.post.city)
     }
   },
   computed: {
-    // 当前要展示的数据数组
-    dataList () {
-      if (!this.postData.data) {
-        return []
+    newDataList () {
+      var arr = []
+      if (this.$store.state.post.city) {
+        this.searchCity = this.$store.state.post.city;
+        const arr2 = [];
+        // dataList = arr
+        // console.log(this.searchCity)
+        // console.log(this.postData.data)
+        this.postData.data.forEach(v => {
+          if (v.city.name === this.searchCity + "市") {
+            arr2.push(v)
+          }
+          // console.log(v)
+        });
+        // console.log(arr2)
+        arr = arr2.slice(
+          (this.pageIndex - 1) * this.pageSize,
+          this.pageIndex * this.pageSize
+        )
+        this.postData.total = arr2.length
       }
-      const arr = this.postData.data.slice(
-        (this.pageIndex - 1) * this.pageSize,
-        this.pageIndex * this.pageSize
-      ) //slice切割返回包含0不包含5索引
-      return arr
+      if (!this.$store.state.post.city) {
+        arr = this.postData.data.slice(
+          (this.pageIndex - 1) * this.pageSize,
+          this.pageIndex * this.pageSize
+        )
+        this.postData.total = this.postData.data.length
+      }
+      return arr;
     }
   },
   mounted () {
