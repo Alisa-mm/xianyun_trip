@@ -4,9 +4,11 @@
     <el-row class="search-bar"
             type="flex">
       <input type="text"
+             ref="input"
              style="outline:none"
              placeholder="请输入想去的地方，比如：'广州'"
-             v-model="city">
+             v-model="city"
+             @keyup.enter="handleClick">
       <i class="el-icon-search"
          @click="handleClick"></i>
     </el-row>
@@ -48,6 +50,7 @@ export default {
           city: city
         }
       })
+      this.$refs.input.value = city;
     }
   }
 }
