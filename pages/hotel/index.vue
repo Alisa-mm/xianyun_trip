@@ -30,6 +30,7 @@
 
     <!-- 酒店详情 -->
     <HotelDetails/>
+
    
   </section>
 </template>
@@ -109,7 +110,7 @@ export default {
     open() {
         this.$alert('定位当前的城市：广州市', '提示', {
           confirmButtonText: '确定',
-          type: 'success' 
+          type: 'success',
         });
       }
   }
