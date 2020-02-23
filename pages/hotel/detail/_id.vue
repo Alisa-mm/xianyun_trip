@@ -107,6 +107,7 @@
                    text-color="#ff9900">
             {{comm_score.environment}}
           </el-rate>
+          <div class="stamp">推荐</div>
         </el-col>
         <!-- 评分 -->
         <el-col :span="5"
@@ -251,6 +252,21 @@ export default {
           color: rgb(255, 153, 0);
         }
       }
+    }
+    .stamp {
+      position: absolute;
+      left: 20px;
+      top: -3px;
+      border: 2px solid #fa3;
+      text-align: center;
+      line-height: 70px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      opacity: 0.25;
+      transform: rotate(-30deg);
+      font-size: x-large;
+      color: #f90;
     }
   }
 }
