@@ -2,7 +2,13 @@
   <section class="contianer">
     <!-- 条件筛选 -->
     <el-form class="form">
+<<<<<<< HEAD
       <el-input placeholder="切换城市" class="switchCity" v-model="CityValue"></el-input>
+=======
+      <el-input placeholder="切换城市"
+                class="switchCity"
+                v-model.trim="CityValue"></el-input>
+>>>>>>> 4023bf25d09340e844ebe4806ec80e06a77fc8cd
 
       <!-- 住宿时间 -->
       <el-date-picker
@@ -93,12 +99,20 @@ export default {
     }
   },
   methods: {
+<<<<<<< HEAD
     // 点击隐藏显示
     handeHidden () {
 
     },
     // 筛选
     handleClick () { },
+=======
+    handleClick () {
+      if (this.CityValue !== '') {
+        this.$emit('searchCity', this.CityValue)
+      }
+    },
+>>>>>>> 4023bf25d09340e844ebe4806ec80e06a77fc8cd
 
   }
 }

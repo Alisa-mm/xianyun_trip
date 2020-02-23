@@ -8,7 +8,7 @@
     </el-breadcrumb>
 
     <!-- 顶部筛选器 -->
-    <HotelFlights />
+    <HotelFlights @searchCity="searchCity"></HotelFlights>
 
     <!-- 区域信息 -->
     <el-row style="margin-top: 22px;">
@@ -68,7 +68,7 @@
     </el-row>
 
     <!-- 选择器 -->
-    <HotelSelector />
+    <HotelSelector></HotelSelector>
 
     <!-- 酒店详情 -->
     <HotelDetails :data="cityHotel" />
@@ -122,12 +122,12 @@ export default {
   methods: {
     location (location) {
       this.cityName = location
-      this.getData()
+      this.getData(location)
     },
     //请求数据
-    getData () {
+    getData (cityName) {
       this.$axios({
-        url: `cities?name=` + this.cityName
+        url: `cities?name=` + cityName
       }).then(({ data: res }) => {
         console.log(res.data[0]);
         this.cityId = res.data[0].id
@@ -140,6 +140,10 @@ export default {
 
         })
       })
+    },
+    searchCity (cityName) {
+      console.log(cityName)
+      this.getData(cityName)
     }
   }
 }
