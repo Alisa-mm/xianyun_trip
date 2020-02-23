@@ -20,7 +20,10 @@
           <span>36<i>条评价</i></span>
           <span>46<i>篇游记</i></span>
         </div>
-        <div>{{item.address}}</div>
+        <div class="diZhi">
+          <i class="el-icon-location"></i>
+          <span>{{item.address}}</span>
+          </div>
       </el-col>
       <el-col :span="6">
         <div>
@@ -98,6 +101,9 @@ export default {
           color: #000;
         }
       }
+    }
+    .diZhi{
+      
     }
   }
 }
