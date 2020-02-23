@@ -68,7 +68,7 @@
     </el-row>
 
     <!-- 选择器 -->
-    <!-- <HotelSelector /> -->
+    <HotelSelector />
 
     <!-- 酒店详情 -->
     <HotelDetails />
