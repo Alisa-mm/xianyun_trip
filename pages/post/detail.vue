@@ -36,47 +36,46 @@
                   <span>分享</span>
                 </div>
               </div>
+            </div>
+            <!-- 评论模块 -->
+            <div class="comment">
+              <p>评论</p>
+              <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
 
-              <!-- 评论模块 -->
-              <div class="comment">
-                <p>评论</p>
-                <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+              <!-- 图片上传 -->
+              <div class="uploadImage">
+                <el-upload
+                  :action="$axios.defaults.baseURL + '/upload'"
+                  name="files"
+                  list-type="picture-card"
+                  :on-preview="handlePictureCardPreview"
+                  :on-remove="handleRemove"
+                  :on-success="handleImage"
+                >
+                  <i class="el-icon-plus"></i>
+                </el-upload>
 
-                <!-- 图片上传 -->
-                <div class="uploadImage">
-                  <el-upload
-                    :action="$axios.defaults.baseURL + '/upload'"
-                    name="files"
-                    list-type="picture-card"
-                    :on-preview="handlePictureCardPreview"
-                    :on-remove="handleRemove"
-                    :on-success="handleImage"
-                  >
-                    <i class="el-icon-plus"></i>
-                  </el-upload>
+                <el-dialog :visible.sync="dialogVisible">
+                  <img width="100%" :src="dialogImageUrl" alt />
+                </el-dialog>
 
-                  <el-dialog :visible.sync="dialogVisible">
-                    <img width="100%" :src="dialogImageUrl" alt />
-                  </el-dialog>
+                <el-button type="primary" size="small" @click="handleComment">提交</el-button>
+              </div>
 
-                  <el-button type="primary" size="small" @click="handleComment">提交</el-button>
-                </div>
+              <!-- 评论组件 -->
+              <Comment :data="commentContent" />
 
-                <!-- 评论组件 -->
-                <Comment :data="commentContent" />
-
-                <!-- 分页 -->
-                <div class="pagin">
-                  <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="start / limit + 1"
-                    :page-sizes="[5, 10, 15, 20]"
-                    :page-size="limit"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="total"
-                  ></el-pagination>
-                </div>
+              <!-- 分页 -->
+              <div class="pagin">
+                <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="start / limit + 1"
+                  :page-sizes="[5, 10, 15, 20]"
+                  :page-size="limit"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="total"
+                ></el-pagination>
               </div>
             </div>
           </div>
@@ -117,7 +116,6 @@ export default {
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
-      this.imageUrl = file.name;
       this.dialogVisible = true;
     },
 
@@ -125,11 +123,12 @@ export default {
      * 图片上传
      */
     handleImage(response, file, fileList) {
-      console.log(response);
-      console.log(file);
-      console.log(fileList);
-      
-      this.imageUrl = response 
+      /**
+       * 通过upload接口返回的response数据，遍历之后push到 this.imageUrl即可通过添加多个图片
+       */
+      response.forEach(e => {
+        this.imageUrl.push(e);
+      });
     },
 
     /**
@@ -287,7 +286,6 @@ export default {
 
   .article {
     /deep/img {
-      display: inline-block;
       max-width: 700px;
     }
   }

@@ -8,7 +8,7 @@
       </div>
       <ComModule v-if="item.parent" :data="item.parent" />
       <div @mouseenter="mouseHover" @mouseleave="mouseLeave">
-        <div v-for="(a,i) in item.pics" :key="i">
+        <div  class="commentImage" v-for="(a,i) in item.pics" :key="i">
           <img :src="$axios.defaults.baseURL + a.url" />
         </div>
         <div class="commentContent">{{item.content}}</div>
@@ -87,4 +87,10 @@ export default {
     display: none;
   }
 }
+.commentImage{
+    width: 650px;
+    img{
+      max-width: 650px;
+    }
+  }
 </style>
