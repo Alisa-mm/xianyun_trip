@@ -24,8 +24,8 @@
       </el-col>
       <el-col :span="6">
         <div>
-          携程 ￥
-          <span>140</span>起>
+          <span>携程</span>
+          <span>￥140起 ></span>
         </div>
         <div>
           携程 ￥
@@ -94,6 +94,9 @@ export default {
       margin-bottom:10px;
       span{
         margin-left:50px;
+        i{
+          color: #000;
+        }
       }
     }
   }
