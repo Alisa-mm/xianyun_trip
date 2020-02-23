@@ -126,6 +126,7 @@ export default {
       this.$axios({
         url: `cities?name=` + this.cityName
       }).then(({ data: res }) => {
+        // console.log(res.data[0]);
         this.scenics = res.data[0].scenics
       })
     }
@@ -151,6 +152,7 @@ export default {
       &:hover {
         color: #0099ff;
         text-decoration: underline;
+        cursor: pointer;
       }
     }
   }

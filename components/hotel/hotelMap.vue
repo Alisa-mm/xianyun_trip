@@ -37,7 +37,7 @@ export default {
       window.onLoad = () => {
         // 加载地图容器
         this.map = new AMap.Map('container', {
-          zoom: 11,//级别
+          zoom: 12,//级别
           resizeEnable: true
           // center: [116.39428, 39.90923]  //中心坐标
         });
@@ -67,7 +67,7 @@ export default {
 
         function onComplete (data) {
           // data是具体的定位信息
-          console.log(data);
+          // console.log(data);
           _that.$notify({
             title: '您的位置是：',
             message: data.addressComponent.city
