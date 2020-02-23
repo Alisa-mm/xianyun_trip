@@ -2,13 +2,7 @@
   <section class="contianer">
     <!-- 条件筛选 -->
     <el-form class="form">
-<<<<<<< HEAD
       <el-input placeholder="切换城市" class="switchCity" v-model="CityValue"></el-input>
-=======
-      <el-input placeholder="切换城市"
-                class="switchCity"
-                v-model.trim="CityValue"></el-input>
->>>>>>> 4023bf25d09340e844ebe4806ec80e06a77fc8cd
 
       <!-- 住宿时间 -->
       <el-date-picker
@@ -19,6 +13,7 @@
         class="stayTime"
         v-model="stayTime"
         :picker-options="pickerOptions"
+        @click="handleHidden"
       ></el-date-picker>
 
       <!-- 人数 -->
@@ -28,7 +23,7 @@
         v-model="NumberValue"
         class="NumberPeople"
       ></el-input>
-      <el-card shadow="always" class="el-card">
+      <el-card shadow="always" class="el-card" v-if="isShow ===''">
         <span>每件</span>
         <el-select v-model="value" placeholder="成人">
           <el-option
@@ -99,20 +94,12 @@ export default {
     }
   },
   methods: {
-<<<<<<< HEAD
     // 点击隐藏显示
     handeHidden () {
-
+      
     },
     // 筛选
     handleClick () { },
-=======
-    handleClick () {
-      if (this.CityValue !== '') {
-        this.$emit('searchCity', this.CityValue)
-      }
-    },
->>>>>>> 4023bf25d09340e844ebe4806ec80e06a77fc8cd
 
   }
 }
