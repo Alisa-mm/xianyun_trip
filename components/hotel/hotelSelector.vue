@@ -20,7 +20,6 @@
               collapse-tags
               class="select"
               placeholder="请选择"
-              @change="getHotellevel"
             >
               <el-option
                 v-for="(item,index) in levels"
@@ -40,7 +39,6 @@
               multiple
               collaps-tags
               placeholder="请选择"
-              @change="getHoteltype"
             >
               <el-option
                 v-for="(item,index) in types"
@@ -60,7 +58,6 @@
               multiple
               collaps-tags
               placeholder="请选择"
-              @change="getHotelasset"
             >
               <el-option
                 v-for="(item,index) in assets"
@@ -80,7 +77,6 @@
               multiple
               collaps-tags
               placeholder="请选择"
-              @change="getHotelbrand"
             >
               <el-option
                 v-for="(item,index) in brands"
@@ -114,6 +110,9 @@ export default {
       assets: [],
       //酒店品牌
       brands: []
+
+      // //筛选后的酒店
+      // hotelList: []
     };
   },
 
@@ -145,49 +144,65 @@ export default {
     },
 
     //  获取酒店 价格 类型 星级 设施
-    getHotellevel(data) {
-      this.$store.commit("hotel/setHotellevel", data[data.length - 1]);
-      this.hotelGather()
-      console.log( this.$store.state.hotel.selectHotel.hotellevel);
-    },
-    getHoteltype(data) {
-      this.$store.commit("hotel/setHoteltype", data[data.length - 1]);
-      this.hotelGather()
-    },
-    getHotelasset(data) {
-      this.$store.commit("hotel/setHotelasset", data[data.length - 1]);
-      this.hotelGather()
-    },
-    getHotelbrand(data) {
-      this.$store.commit("hotel/setHotelbrand", data[data.length - 1]);
-      this.hotelGather()
-    },
+    // getHotellevel(data) {
+    //   this.$store.commit("hotel/setHotellevel", data[data.length - 1]);
+    //   this.hotelGather()
+    //   console.log( this.$store.state.hotel.selectHotel.hotellevel);
+    // },
+    // getHoteltype(data) {
+    //   this.$store.commit("hotel/setHoteltype", data[data.length - 1]);
+    //   this.hotelGather()
+    // },
+    // getHotelasset(data) {
+    //   this.$store.commit("hotel/setHotelasset", data[data.length - 1]);
+    //   this.hotelGather()
+    // },
+    // getHotelbrand(data) {
+    //   this.$store.commit("hotel/setHotelbrand", data[data.length - 1]);
+    //   this.hotelGather()
+    // },
 
     // 筛选酒店
-    // hotelGather(){
-    //   this.$axios({
-    //     url: '/hotels',
-    //     params:{
-    //       price_in: this.$store.state.hotel.selectHotel.price_in,
-    //       hotellevel:this.$store.state.hotel.selectHotel.hotellevel,
-    //       hoteltype:this.$store.state.hotel.selectHotel.hoteltype,
-    //       hotelbrand:this.$store.state.hotel.selectHotel.hotelbrand,
-    //       hotelasset:this.$store.state.hotel.selectHotel.hotelasset
-    //     }
-    //   }).then(res=>{
-    //     let { levels, types, assets, brands} = res.data.data
-    //     this.levels = levels
-    //     this.types = types
-    //     this.assets = assets
-    //     this.brands = brands
-    //     console.log(res);
-    //   })
-    // }
+    hotelGather(){
+      this.$axios({
+        url: '/hotels',
+        params:{
+          // price_in: this.$store.state.hotel.selectHotel.price_in,
+          hotellevel: this.$store.state.hotel.selectHotel.hotellevel
+          // hoteltype:this.type,
+          // hotelbrand:this.brand,
+          // hotelasset:this.facility
+        }
+      }).then(res=>{
+        // console.log(res.data.data);
+      })
+    }
   },
   watch: {
     // 监听价格改动
     price(a) {
       this.$store.commit("hotel/setPrice", a * 40);
+      this.hotelGather()
+    },
+    grade(a){
+      console.log(a[a.length - 1]);
+      this.$store.commit("hotel/setHotellevel", a[a.length - 1]);
+       this.hotelGather()
+    },
+    type(a){
+      console.log(a[a.length - 1]);
+      this.$store.commit("hotel/setHoteltype", a[a.length - 1]);
+       this.hotelGather()
+    },
+    facility(a){
+      console.log(a[a.length - 1]);
+      this.$store.commit("hotel/setHotelasset", a[a.length - 1]);
+       this.hotelGather()
+    },
+    brand(a){
+      console.log(a[a.length - 1]);
+      this.$store.commit("hotel/setHotelbrand", a[a.length - 1]);
+       this.hotelGather()
     }
   }
 };

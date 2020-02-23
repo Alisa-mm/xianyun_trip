@@ -1,8 +1,7 @@
 <template>
   <section class="container">
     <!-- 顶部面包屑 -->
-    <el-breadcrumb class="el-title"
-                   separator-class="el-icon-arrow-right">
+    <el-breadcrumb class="el-title" separator-class="el-icon-arrow-right">
       <el-breadcrumb-item>酒店</el-breadcrumb-item>
       <el-breadcrumb-item>酒店预订</el-breadcrumb-item>
     </el-breadcrumb>
@@ -12,51 +11,45 @@
 
     <!-- 区域信息 -->
     <el-row style="margin-top: 22px;">
-      <el-col :span="14"
-              class="hotel-left">
+      <el-col :span="14" class="hotel-left">
         <!-- 区域 -->
         <el-row>
-          <el-col :span="3"
-                  class="title">
-            区域：
-          </el-col>
+          <el-col :span="3" class="title">区域：</el-col>
           <el-col :span="21">
-            <span v-for="(item, index) in scenics"
-                  :key="index"
-                  class="site">
-              {{item.name}}
-            </span>
+            <span v-for="(item, index) in scenics" :key="index" class="site">{{item.name}}</span>
           </el-col>
         </el-row>
         <!-- 均价 -->
         <el-row>
-          <el-col :span="3"
-                  class="title">
-            均价 <el-tooltip class="item"
-                        effect="dark"
-                        content="等级均价由平日价格计算得出，节假日价格会有上浮。"
-                        placement="top-start">
+          <el-col :span="3" class="title">
+            均价
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="等级均价由平日价格计算得出，节假日价格会有上浮。"
+              placement="top-start"
+            >
               <i class="el-icon-question"></i>
             </el-tooltip>
           </el-col>
           <el-col :span="21">
             <el-row>
-
-              <el-col :span="6"
-                      v-for="(item,index) in prices"
-                      :key="index">
-                <el-tooltip class="item"
-                            effect="dark"
-                            content="等级评定是针对房价，设施和服务等各方面水平的综合评估。"
-                            placement="top-start">
-                  <i v-for="(item,index) in 3"
-                     class="iconfont iconhuangguan"
-                     :key="index"
-                     style="color:#f7ba2a;"></i>
+              <el-col :span="6" v-for="(item,index) in prices" :key="index">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="等级评定是针对房价，设施和服务等各方面水平的综合评估。"
+                  placement="top-start"
+                >
+                  <i
+                    v-for="(item,index) in 3"
+                    class="iconfont iconhuangguan"
+                    :key="index"
+                    style="color:#f7ba2a;"
+                  ></i>
                 </el-tooltip>
                 <span>￥{{item.price}}</span>
               </el-col>
-
             </el-row>
           </el-col>
         </el-row>
@@ -117,7 +110,10 @@ export default {
 
   mounted () {
     //页面一加载请求数据
-    this.location()
+    this.location();
+    if(this.$store.state.hotel.selectHotel.hotelList){
+      this.cityHotel = this.$store.state.hotel.selectHotel.hotelList
+    }
   },
   methods: {
     location (location) {
@@ -137,7 +133,6 @@ export default {
         }).then(({ data: res }) => {
           console.log(res);
           this.cityHotel = res.data
-
         })
       })
     },

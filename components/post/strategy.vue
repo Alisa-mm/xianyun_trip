@@ -24,14 +24,19 @@
 
     <p>攻略目录</p>
     <div style="height: 300px;">
-      <el-steps direction="vertical" :active="1">
+      <el-steps direction="vertical" :active="active">
         <el-step
           v-for="(item, index) in recommendList"
           :key="index"
           :title="item.title"
-          @click="handleClick(item.id)"
         ></el-step>
       </el-steps>
+      <!-- <el-timeline>
+        <el-timeline-item
+          v-for="(item, index) in recommendList"
+          :key="index"
+        ><p @click="handleClick(item.id)">{{item.title}}</p></el-timeline-item>
+      </el-timeline> -->
     </div>
   </div>
 </template>
@@ -52,7 +57,8 @@ export default {
           class: "icon-xingxing"
           //   totalList: this.commentContent
         }
-      ] // 字体图标
+      ], // 字体图标
+      active: 2
     };
   },
   methods: {
@@ -63,7 +69,7 @@ export default {
       if (index === 0) {
         this.$store.state.post.remake();
       }
-      if (index === 1) {
+      /* if (index === 1) {
         this.$axios({
           url: "/posts/star",
           headers: {
@@ -73,9 +79,9 @@ export default {
             id: this.$route.query.id
           }
         }).then(res => {
-          this.$message.success(res.data.message);
+          this.$message.error(res.data.message);
         });
-      }
+      } */
     },
 
     /**
@@ -89,11 +95,12 @@ export default {
         this.recommendList = res.data.data;
       });
     },
-     /**
+    /**
      *  点击相关功略跳转页面
      */
-    handleClick(id){
-      this.$router.push({path:'/post/deatil?id=' + id})
+    handleClick(data) {
+      console.log(1);
+      this.$router.push({path:'detail', params:{id: 4}});
     }
   },
   mounted() {
