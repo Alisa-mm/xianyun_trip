@@ -11,9 +11,11 @@
                          label="低价房型"
                          width="420">
         </el-table-column>
-        <el-table-column prop="price"
-                         label="最低价格/每晚"
+        <el-table-column label="最低价格/每晚"
                          width="160">
+          <template slot-scope="scope">
+            <div v-html="formatPrice(scope.row)"></div>
+          </template>
         </el-table-column>
       </el-table>
     </el-row>
@@ -31,6 +33,12 @@ export default {
   computed: {
     newData () {
       return res
+    }
+  },
+  methods: {
+    formatPrice (row) {
+      // console.log(row)
+      return row.price + '￥'
     }
   }
 }

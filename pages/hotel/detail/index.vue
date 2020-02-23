@@ -4,8 +4,8 @@
     <el-row>
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/hotel' }">酒店</el-breadcrumb-item>
-        <el-breadcrumb-item>广州酒店</el-breadcrumb-item>
-        <el-breadcrumb-item>锦江之星(吴泾店)</el-breadcrumb-item>
+        <el-breadcrumb-item v-for="(item, index) in breadcrumb"
+                            :key="index">{{ item }}</el-breadcrumb-item>
       </el-breadcrumb>
     </el-row>
 
@@ -166,7 +166,9 @@ export default {
       // 当前页面数据
       detailData: {
         hotelbrand: {}
-      }
+      },
+      // breadcrumb
+      breadcrumb: ''
     }
   }, // data END
 
@@ -196,7 +198,9 @@ export default {
        }) */
       this.$store.dispatch('hotel/findHotelData', this.id).then((res) => {
         this.comm_score = res.data[0].scores
-        console.log(this.comm_score)
+        // console.log(this.comm_score)
+        this.breadcrumb = res.data[0].breadcrumb.split('>')
+        console.log(this.breadcrumb)
 
       })
 
