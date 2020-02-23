@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     formatPrice (row) {
-      console.log(row)
+      // console.log(row)
       return row.price + '￥'
     }
   }
