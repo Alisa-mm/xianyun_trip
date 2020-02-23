@@ -63,7 +63,7 @@
       </el-col>
       <el-col :span="10">
         <!-- 地图组件 -->
-        <HotelMap @location="location" />
+        <!-- <HotelMap @location="location" /> -->
       </el-col>
     </el-row>
 

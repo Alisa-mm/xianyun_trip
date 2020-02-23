@@ -13,21 +13,33 @@
       </el-col>
 
       <el-col :span="18" class="tiaoJian">
-         <div class="grid-content bg-purple">
+         <div class="grid-content">
           <div>住宿类型</div>
-          <el-select v-model="type" class="select" placeholder="请选择">
-            <el-option
-              v-for="(item,index) in types"
-              :key="index"
-              :label="item.level"
-              :value="item.name"
-            ></el-option>
+          <div class="borderHidden">
+          <el-select 
+                v-model="type" 
+                multiple 
+                collapse-tags
+                class="select" 
+                placeholder="请选择">
+                <el-option
+                  v-for="(item,index) in types"
+                  :key="index"
+                  :label="item.level"
+                  :value="item.name"
+                ></el-option>
           </el-select>
+          </div>
         </div>
 
-         <div class="grid-content bg-purple-light">
+         <div class="grid-content">
           <div>住宿等级</div>
-          <el-select v-model="grade" class="select" placeholder="请选择">
+          <div class="borderHidden">
+          <el-select 
+          v-model="grade"
+           multiple 
+           collaps-tags 
+           placeholder="请选择">
             <el-option
               v-for="(item,index) in levels"
               :key="index"
@@ -35,11 +47,17 @@
               :value="item.name"
             ></el-option>
           </el-select>
+          </div>
         </div>
 
-        <div class="grid-content bg-purple-light">
+        <div class="grid-content">
           <div>酒店设施</div>
-          <el-select v-model="facility" class="select" placeholder="请选择">
+          <div class="borderHidden">
+          <el-select 
+          v-model="facility" 
+          multiple 
+          collaps-tags 
+          placeholder="请选择">
             <el-option
               v-for="(item,index) in assets"
               :key="index"
@@ -47,11 +65,17 @@
               :value="item.name"
             ></el-option>
           </el-select>
+          </div>
         </div>
 
-        <div class="grid-content bg-purple">
+        <div class="grid-content">
           <div>酒店品牌</div>
-          <el-select v-model="brand" class="select" placeholder="请选择">
+          <div class="borderHidden">
+          <el-select 
+          v-model="brand" 
+          multiple 
+          collaps-tags 
+          placeholder="请选择">
             <el-option
               v-for="(item,index) in brands"
               :key="index"
@@ -59,6 +83,7 @@
               :value="item.name"
             ></el-option>
           </el-select>
+          </div>
         </div>
       </el-col>
     </el-row>
@@ -69,8 +94,8 @@
 export default {
   data () {
     return {
-      price: "",  //价格
-      grade: "",  //酒店等级
+      price: 0,  //价格
+      grade: 0,  //酒店等级
       type: "",   //酒店类型
       facility: "", //酒店设施
       brand: "",  //就地按品牌
@@ -173,7 +198,16 @@ export default {
     .grid-content{
       padding:0 15px;
       border-left:1px solid #dcdfe6;
-    
+      .borderHidden{
+        width: 150px;
+        float:right;
+        overflow: hidden;
+        .el-select{
+        width: 160px;
+        margin:-1px;
+
+      }
+      }
     }
   }
 }
