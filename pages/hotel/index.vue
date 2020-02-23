@@ -1,37 +1,78 @@
 <template>
   <section class="container">
+    <!-- 顶部面包屑 -->
+    <el-breadcrumb class="el-title"
+                   separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item>酒店</el-breadcrumb-item>
+      <el-breadcrumb-item>酒店预订</el-breadcrumb-item>
+    </el-breadcrumb>
+
     <!-- 顶部筛选器 -->
-    <HotelFlights/>
+    <HotelFlights />
 
     <!-- 区域信息 -->
-    <el-row type="flex">
-      <el-col :span="14">
-        <div>区域：<span 
-        v-for="(item, index) in scenics"
-        :key="index"
-        class="site">
-        {{item.name}}
-        </span></div>
-        
-        均价：<span v-for="(item,index) in prices"
-        :key="index">
-          <i class="iconfont iconhuangguan" v-for="(item,index) in 3" :key="index"></i>
-          <span>￥{{item.price}}</span>
-        </span>
+    <el-row style="margin-top: 22px;">
+      <el-col :span="14"
+              class="hotel-left">
+        <!-- 区域 -->
+        <el-row>
+          <el-col :span="3"
+                  class="title">
+            区域：
+          </el-col>
+          <el-col :span="21">
+            <span v-for="(item, index) in scenics"
+                  :key="index"
+                  class="site">
+              {{item.name}}
+            </span>
+          </el-col>
+        </el-row>
+        <!-- 均价 -->
+        <el-row>
+          <el-col :span="3"
+                  class="title">
+            均价 <el-tooltip class="item"
+                        effect="dark"
+                        content="等级均价由平日价格计算得出，节假日价格会有上浮。"
+                        placement="top-start">
+              <i class="el-icon-question"></i>
+            </el-tooltip>：
+          </el-col>
+          <el-col :span="21">
+            <el-row>
+
+              <el-col :span="6"
+                      v-for="(item,index) in prices"
+                      :key="index">
+                <el-tooltip class="item"
+                            effect="dark"
+                            content="等级评定是针对房价，设施和服务等各方面水平的综合评估。"
+                            placement="top-start">
+                  <i v-for="(item,index) in 3"
+                     class="iconfont iconhuangguan"
+                     :key="index"
+                     style="color:#f7ba2a;"></i>
+                </el-tooltip>
+                <span>￥{{item.price}}</span>
+              </el-col>
+
+            </el-row>
+          </el-col>
+        </el-row>
       </el-col>
       <el-col :span="10">
         <!-- 地图组件 -->
-        <HotelMap/>
+        <HotelMap @location="location" />
       </el-col>
     </el-row>
 
     <!-- 选择器 -->
-    <HotelSelector/>
+    <!-- <HotelSelector /> -->
 
     <!-- 酒店详情 -->
-    <HotelDetails/>
-
-    
+    <HotelDetails />
+    <!-- {{cityName}} -->
   </section>
 </template>
 
@@ -41,65 +82,51 @@ import HotelMap from "@/components/hotel/hotelMap";
 import HotelSelector from "@/components/hotel/HotelSelector";
 import HotelDetails from "@/components/hotel/hotelDetails";
 export default {
-  data(){
-    return{
+  data () {
+    return {
+      // 当前城市
+      cityName: '',
+      citys: '',
       //酒店列表
-      scenics:[
-        {
-          name:"人民广场",
-          price:197
-        },
-        {
-          name:"城桥镇",
-          price:222
-        },
-        {
-          name:"金山区",
-          price:333
-        },
-        {
-          name:"新河镇",
-          price:197
-        },
-        {
-          name:"人民广南门场",
-          price:197
-        },
+      scenics: [
+        { name: '' }
       ],
-      prices:[
+      prices: [
         {
-          price:120
+          price: 332
         },
         {
-          price:188
+          price: 521
         },
         {
-          price:888
+          price: 768
         },
       ]
     }
   },
   //注册组件
-  components:{
+  components: {
     HotelFlights,
     HotelSelector,
     HotelMap,
     HotelDetails
   },
 
-  mounted(){
+  mounted () {
     //页面一加载请求数据
-    this.getData();
+    this.location()
   },
-  methods:{
+  methods: {
+    location (location) {
+      this.cityName = location
+      this.getData()
+    },
     //请求数据
-    getData(){
+    getData () {
       this.$axios({
-        url:`cities?name=` + this.name
-      }).then(({data:res})=>{
-        this.hotelData = res.data[0]
-        // this.hotelScenice = res.data[0].scenics
-        console.log(this.hotelData);
+        url: `cities?name=` + this.cityName
+      }).then(({ data: res }) => {
+        this.scenics = res.data[0].scenics
       })
     }
   }
@@ -107,17 +134,25 @@ export default {
 </script>
 
 <style scoped lang="less">
-.container{
+.el-breadcrumb {
+  padding: 20px 0;
+}
+.container {
   width: 1000px;
-  margin:10px auto;
-  .el-row{
-    margin-top:20px;
-    span{
-      .iconfont{
-        color: #f7ba2a;
+  margin: 0 auto;
+  .hotel-left {
+    color: #666;
+    font-size: 14px;
+    > .el-row {
+      padding-bottom: 20px;
+    }
+    .site {
+      margin-right: 10px;
+      &:hover {
+        color: #0099ff;
+        text-decoration: underline;
       }
     }
   }
 }
-
 </style>
