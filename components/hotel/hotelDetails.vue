@@ -1,87 +1,102 @@
 <template>
   <section class="hotelDetails">
     <!-- 酒店详情 -->
-    <el-row v-for="(item,index) in data" :key="index">
-      <el-col :span="6">{{item.photos}}</el-col>
-      <el-col :span="12" class="hotelXQ">
-        <h2>{{item.name}}</h2>
-        <div class="alias">
-          <span>{{item.alias}}</span>
-          <i class="iconfont iconhuangguan" v-for="(item,index) in 3" :key="index"></i>
-          经济型
-        </div>
-        <div class="pingFen">
-          <el-rate
-            v-model="value5"
-            disabled
-            show-score
-            text-color="#ff9900"
-            score-template="{value}"
-          ></el-rate>
-          <span>
-            36
-            <i>条评价</i>
-          </span>
-          <span>
-            46
-            <i>篇游记</i>
-          </span>
-        </div>
-        <div class="diZhi">
-          <i class="el-icon-location"></i>
-          <span>{{item.address}}</span>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="lianJie">
-          <span>携程</span>
-          <span>
-            ￥140起
-            <i class="el-icon-arrow-right"></i>
-          </span>
-        </div>
-        <div class="lianJie">
-          <span>携程</span>
-          <span>
-            ￥140起
-            <i class="el-icon-arrow-right"></i>
-          </span>
-        </div>
-        <div class="lianJie">
-          <span>携程</span>
-          <span>
-            ￥140起
-            <i class="el-icon-arrow-right"></i>
-          </span>
-        </div>
-      </el-col>
-    </el-row>
-
+    <div @click="goHotelDetail(item.id)"
+         v-for="(item,index) in data"
+         :key="index">
+      <el-row>
+        <el-col :span="8">
+          <img style="width:320px;height:210px"
+               :src="item.photos">
+        </el-col>
+        <el-col :span="10"
+                class="hotelXQ">
+          <h2>{{item.name}}</h2>
+          <div class="alias">
+            <span>{{item.alias}}</span>
+            <i class="iconfont iconhuangguan"
+               v-for="(item,index) in 3"
+               :key="index"></i>
+            经济型
+          </div>
+          <div class="pingFen">
+            <el-rate v-model="value5"
+                     disabled
+                     show-score
+                     text-color="#ff9900"
+                     score-template="{value}"></el-rate>
+            <span>
+              36
+              <i>条评价</i>
+            </span>
+            <span>
+              46
+              <i>篇游记</i>
+            </span>
+          </div>
+          <div class="diZhi">
+            <i class="el-icon-location"></i>
+            <span>{{item.address}}</span>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="lianJie">
+            <span>携程</span>
+            <span>
+              ￥140起
+              <i class="el-icon-arrow-right"></i>
+            </span>
+          </div>
+          <div class="lianJie">
+            <span>携程</span>
+            <span>
+              ￥140起
+              <i class="el-icon-arrow-right"></i>
+            </span>
+          </div>
+          <div class="lianJie">
+            <span>携程</span>
+            <span>
+              ￥140起
+              <i class="el-icon-arrow-right"></i>
+            </span>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
     <!-- 分页 -->
     <el-row class="paging">
-      <el-pagination layout="prev, pager, next" :total="50"></el-pagination>
-      </el-row>
+      <el-pagination layout="prev, pager, next"
+                     :total="50"></el-pagination>
+    </el-row>
   </section>
 </template>
 
 <script>
 export default {
+  props: ['data'],
   data () {
     return {
       value5: 3.7,
-      data: [
-        {
-          photos: "图片",
-          alias: "ru jia kuai jie hotel (fang zhou yuan dian)",
-          name: "如家快捷酒店(天河方舟园店)",
-          address: "荣乐中路12弄282号(近沪松路)",
-        },
-        {
-          photos: "图片1",
-          name: "如家快捷酒店(天河方舟园店)",
-          address: "荣乐中路12弄282号(近沪松路)",
-        }
-      ]
+      // data: [
+      //   {
+      //     photos: "图片",
+      //     alias: "ru jia kuai jie hotel (fang zhou yuan dian)",
+      //     name: "如家快捷酒店(天河方舟园店)",
+      //     address: "荣乐中路12弄282号(近沪松路)",
+      //   },
+      //   {
+      //     photos: "图片1",
+      //     name: "如家快捷酒店(天河方舟园店)",
+      //     address: "荣乐中路12弄282号(近沪松路)",
+      //   }
+      // ]
+    }
+  },
+  methods: {
+    goHotelDetail (id) {
+      console.log(id);
+      this.$router.push({ path: `/hotel/detail/${id}` })
     }
   }
 
@@ -142,12 +157,12 @@ export default {
       border-bottom: 1px solid #ddd;
     }
   }
-  .paging{
+  .paging {
     // position: absolute;
     // right:0px;
     // bottom:0px;
-    margin-left:700px;
-    border:0;
+    margin-left: 700px;
+    border: 0;
   }
 }
 </style>

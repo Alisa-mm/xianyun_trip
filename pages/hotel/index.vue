@@ -71,7 +71,7 @@
     <HotelSelector />
 
     <!-- 酒店详情 -->
-    <HotelDetails />
+    <HotelDetails :data="cityHotel" />
     <!-- {{cityName}} -->
   </section>
 </template>
@@ -86,8 +86,11 @@ export default {
     return {
       // 当前城市
       cityName: '',
-      citys: '',
-      //酒店列表
+      // 城市id
+      cityId: 0,
+      // 酒店列表
+      cityHotel: '',
+      //区域列表
       scenics: [
         { name: '' }
       ],
@@ -126,8 +129,16 @@ export default {
       this.$axios({
         url: `cities?name=` + this.cityName
       }).then(({ data: res }) => {
-        // console.log(res.data[0]);
+        console.log(res.data[0]);
+        this.cityId = res.data[0].id
         this.scenics = res.data[0].scenics
+        this.$axios({
+          url: `hotels?city=${res.data[0].id}`
+        }).then(({ data: res }) => {
+          console.log(res);
+          this.cityHotel = res.data
+
+        })
       })
     }
   }
