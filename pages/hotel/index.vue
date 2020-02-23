@@ -37,7 +37,7 @@
                         content="等级均价由平日价格计算得出，节假日价格会有上浮。"
                         placement="top-start">
               <i class="el-icon-question"></i>
-            </el-tooltip>：
+            </el-tooltip>
           </el-col>
           <el-col :span="21">
             <el-row>

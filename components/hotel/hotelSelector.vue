@@ -7,89 +7,67 @@
             <span>价格</span>
             <span>0-4000</span>
           </div>
-          <el-slider v-model="price"
-                     :format-tooltip="formatTooltip"></el-slider>
+          <el-slider v-model="price" :format-tooltip="formatTooltip"></el-slider>
         </div>
       </el-col>
-      <el-col :span="18"
-              class="tiaoJian">
+      <el-col :span="18" class="tiaoJian">
         <div class="grid-content">
           <div>住宿等级</div>
           <div class="borderHidden">
-            <el-select v-model="type"
-                       multiple
-                       collapse-tags
-                       class="select"
-                       placeholder="请选择">
-              <el-option v-for="(item,index) in levels"
-                         :key="index"
-                         :label="item.name"
-                         :value="item.level"></el-option>
-              <!-- =======
-      <el-col :span="18"
-              class="tiaoJian">
-        <div class="grid-content bg-purple">
-          <div>住宿类型</div>
-          <el-select v-model="type"
-                     class="select"
-                     placeholder="请选择">
-            <el-option v-for="(item,index) in types"
-                       :key="index"
-                       :label="item.level"
-                       :value="item.name"></el-option>
->>>>>>> 4023bf25d09340e844ebe4806ec80e06a77fc8cd -->
+            <el-select
+              v-model="grade"
+              multiple
+              collapse-tags
+              class="select"
+              placeholder="请选择"
+              @change="getHotellevel"
+            >
+              <el-option
+                v-for="(item,index) in levels"
+                :key="index"
+                :label="item.name"
+                :value="item.level"
+              ></el-option>
             </el-select>
           </div>
         </div>
 
-        <!-- <<<<<<< HEAD -->
         <div class="grid-content">
           <div>住宿类型</div>
           <div class="borderHidden">
-            <el-select v-model="grade"
-                       multiple
-                       collaps-tags
-                       placeholder="请选择">
-              <el-option v-for="(item,index) in types"
-                         :key="index"
-                         :label="item.name"
-                         :value="item.id"></el-option>
-              <!-- =======
-        <div class="grid-content bg-purple-light">
-          <div>住宿等级</div>
-          <el-select v-model="grade"
-                     class="select"
-                     placeholder="请选择">
-            <el-option v-for="(item,index) in levels"
-                       :key="index"
-                       :label="item.level"
-                       :value="item.name"></el-option>
->>>>>>> 4023bf25d09340e844ebe4806ec80e06a77fc8cd -->
+            <el-select
+              v-model="type"
+              multiple
+              collaps-tags
+              placeholder="请选择"
+              @change="getHoteltype"
+            >
+              <el-option
+                v-for="(item,index) in types"
+                :key="index"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
             </el-select>
           </div>
         </div>
 
         <div class="grid-content">
           <div>酒店设施</div>
-          <!-- <<<<<<< HEAD -->
           <div class="borderHidden">
-            <el-select v-model="facility"
-                       multiple
-                       collaps-tags
-                       placeholder="请选择">
-              <el-option v-for="(item,index) in assets"
-                         :key="index"
-                         :label="item.name"
-                         :value="item.id"></el-option>
-              <!-- =======
-          <el-select v-model="facility"
-                     class="select"
-                     placeholder="请选择">
-            <el-option v-for="(item,index) in assets"
-                       :key="index"
-                       :label="item.id"
-                       :value="item.name"></el-option>
->>>>>>> 4023bf25d09340e844ebe4806ec80e06a77fc8cd -->
+            <el-select
+              v-model="facility"
+              multiple
+              collaps-tags
+              placeholder="请选择"
+              @change="getHotelasset"
+            >
+              <el-option
+                v-for="(item,index) in assets"
+                :key="index"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
             </el-select>
           </div>
         </div>
@@ -97,23 +75,19 @@
         <div class="grid-content">
           <div>酒店品牌</div>
           <div class="borderHidden">
-            <el-select v-model="brand"
-                       multiple
-                       collaps-tags
-                       placeholder="请选择">
-              <el-option v-for="(item,index) in brands"
-                         :key="index"
-                         :label="item.name"
-                         :value="item.id"></el-option>
-              <!-- =======
-          <el-select v-model="brand"
-                     class="select"
-                     placeholder="请选择">
-            <el-option v-for="(item,index) in brands"
-                       :key="index"
-                       :label="item.id"
-                       :value="item.name"></el-option>
->>>>>>> 4023bf25d09340e844ebe4806ec80e06a77fc8cd -->
+            <el-select
+              v-model="brand"
+              multiple
+              collaps-tags
+              placeholder="请选择"
+              @change="getHotelbrand"
+            >
+              <el-option
+                v-for="(item,index) in brands"
+                :key="index"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
             </el-select>
           </div>
         </div>
@@ -124,13 +98,13 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      price: 0,  //价格
-      grade: 0,  //酒店等级
-      type: "",   //酒店类型
-      facility: "", //酒店设施
-      brand: "",  //就地按品牌
+      price: 4000, //价格
+      grade: 0, //酒店等级
+      type: 0, //酒店类型
+      facility: 0, //酒店设施
+      brand: "", //就地按品牌
 
       //酒店等级
       levels: [],
@@ -140,38 +114,83 @@ export default {
       assets: [],
       //酒店品牌
       brands: []
-    }
+    };
   },
 
-  mounted () {
+  mounted() {
     //页面一加载请求数据
-    this.hotelData()
+    this.hotelData();
   },
   methods: {
     //滑条价格
-    formatTooltip (val) {
-      return val * 40
+    formatTooltip(val) {
+      return val * 40;
     },
 
     //请求数据额
-    hotelData () {
+    hotelData() {
       this.$axios({
         url: "/hotels/options"
       }).then(({ data: res }) => {
-        console.log(res.data)
+        console.log(res.data);
         //酒店等级
-        this.levels = res.data.levels
+        this.levels = res.data.levels;
         //酒店类型
-        this.types = res.data.types
+        this.types = res.data.types;
         //酒店设施
-        this.assets = res.data.assets
+        this.assets = res.data.assets;
         //酒店品牌
-        this.brands = res.data.brands
-      })
-    }
+        this.brands = res.data.brands;
+      });
+    },
 
+    //  获取酒店 价格 类型 星级 设施
+    getHotellevel(data) {
+      this.$store.commit("hotel/setHotellevel", data[data.length - 1]);
+      this.hotelGather()
+      console.log( this.$store.state.hotel.selectHotel.hotellevel);
+    },
+    getHoteltype(data) {
+      this.$store.commit("hotel/setHoteltype", data[data.length - 1]);
+      this.hotelGather()
+    },
+    getHotelasset(data) {
+      this.$store.commit("hotel/setHotelasset", data[data.length - 1]);
+      this.hotelGather()
+    },
+    getHotelbrand(data) {
+      this.$store.commit("hotel/setHotelbrand", data[data.length - 1]);
+      this.hotelGather()
+    },
+
+    // 筛选酒店
+    // hotelGather(){
+    //   this.$axios({
+    //     url: '/hotels',
+    //     params:{
+    //       price_in: this.$store.state.hotel.selectHotel.price_in,
+    //       hotellevel:this.$store.state.hotel.selectHotel.hotellevel,
+    //       hoteltype:this.$store.state.hotel.selectHotel.hoteltype,
+    //       hotelbrand:this.$store.state.hotel.selectHotel.hotelbrand,
+    //       hotelasset:this.$store.state.hotel.selectHotel.hotelasset
+    //     }
+    //   }).then(res=>{
+    //     let { levels, types, assets, brands} = res.data.data
+    //     this.levels = levels
+    //     this.types = types
+    //     this.assets = assets
+    //     this.brands = brands
+    //     console.log(res);
+    //   })
+    // }
+  },
+  watch: {
+    // 监听价格改动
+    price(a) {
+      this.$store.commit("hotel/setPrice", a * 40);
+    }
   }
-}
+};
 </script>
 
 <style scoped lang="less">

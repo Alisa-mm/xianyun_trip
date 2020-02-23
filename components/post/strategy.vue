@@ -54,9 +54,27 @@ export default {
     /**
      *  点击获取评论框焦点
      */
-    getRemake() {
-      this.$store.state.post.remake();
-    },
+    // getRemake() {
+    //   this.$store.state.post.remake();
+    // },
+      getRemake(index) {
+      if (index === 0) {
+        this.$store.state.post.remake();
+      }
+      if (index === 1) {
+        this.$axios({
+          url: "/posts/star",
+          headers: {
+            Authorization: `Bearer ` + this.$store.state.user.userInfo.token
+          },
+          params: {
+            id: this.$route.query.id
+          }
+        }).then(res => {
+          this.$message.success(res.data.message);
+        });
+      }
+    },
 
     /**
      *  获取推荐文章
