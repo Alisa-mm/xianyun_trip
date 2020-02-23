@@ -112,7 +112,7 @@ export default {
       url: "/posts"
     }).then(res => {
       this.postData = res.data;
-      console.log(this.postData)
+      // console.log(this.postData)
       // var max = 0;
       // this.dataList.forEach(v => {
       //   if (v.images.length > max) {
