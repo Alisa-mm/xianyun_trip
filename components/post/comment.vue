@@ -8,11 +8,11 @@
       </div>
       <ComModule v-if="item.parent" :data="item.parent" />
       <div @mouseenter="mouseHover" @mouseleave="mouseLeave">
-        <div  class="commentImage" v-for="(a,i) in item.pics" :key="i">
-          <img :src="$axios.defaults.baseURL + a.url" />
-        </div>
+          <div class="commentImage">
+              <img v-for="(a,i) in item.pics" :key="i" :src="$axios.defaults.baseURL + a.url" alt="">
+          </div>
         <div class="commentContent">{{item.content}}</div>
-        <a href="javascript:;" ref="aDom" v-show="blockShow">回复</a>
+        <a href="javascript:;" ref="aDom" v-show="blockShow" @click="postRemark(item)">回复</a>
       </div>
     </div>
   </div>
@@ -36,6 +36,13 @@ export default {
     },
     mouseLeave(i) {
       this.blockShow = false;
+    },
+
+    /**
+     * 发出监听事件，传值到父组件
+     */
+    postRemark(item) {
+      this.$emit("getRemark", item);
     }
   }
 };
@@ -54,10 +61,8 @@ export default {
   &:last-child {
     border-bottom: 0;
   }
-  &:hover {
-    a {
-      display: block;
-    }
+  &:hover a {
+    display: block;
   }
   .commentHeader {
     display: flex;
@@ -79,7 +84,6 @@ export default {
   .commentContent {
     padding-left: 30px;
   }
-
   a {
     color: #1e50a2;
     position: absolute;
@@ -87,10 +91,8 @@ export default {
     display: none;
   }
 }
-.commentImage{
-    width: 650px;
-    img{
-      max-width: 650px;
-    }
+img {
+  display: inline-block;
+    max-width: 100px;
   }
 </style>

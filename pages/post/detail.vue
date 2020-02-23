@@ -40,7 +40,18 @@
             <!-- 评论模块 -->
             <div class="comment">
               <p>评论</p>
-              <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+              <!-- 回复模块 -->
+              <div class="remark" v-if="remarkList">
+                <span>回复：{{remarkList.account.nickname}}</span>
+                <i class="el-icon-close"></i>
+              </div>
+              <el-input
+                type="textarea"
+                :rows="2"
+                placeholder="请输入内容"
+                v-model="textarea"
+                ref="remake"
+              ></el-input>
 
               <!-- 图片上传 -->
               <div class="uploadImage">
@@ -51,6 +62,7 @@
                   :on-preview="handlePictureCardPreview"
                   :on-remove="handleRemove"
                   :on-success="handleImage"
+                  :file-list="handleFileList"
                 >
                   <i class="el-icon-plus"></i>
                 </el-upload>
@@ -63,7 +75,7 @@
               </div>
 
               <!-- 评论组件 -->
-              <Comment :data="commentContent" />
+              <Comment :data="commentContent" @getRemark="getRemark" />
 
               <!-- 分页 -->
               <div class="pagin">
@@ -104,7 +116,11 @@ export default {
       total: 0, // 评论总数
       start: 0, // 评论显示数据
       limit: 6, // 显示的条数
-      imageUrl: [] // 保存的图片
+      imageUrl: [], // 保存的图片
+      handleFileList: [], //上传文件后的数组
+      remarkList: "", // 子组件传来的回复对象
+      socreList: {}, // 回复的评分对象
+      followList: null // 回复的id
     };
   },
   methods: {
@@ -197,16 +213,32 @@ export default {
           Authorization: `Bearer ` + this.$store.state.user.userInfo.token
         },
         data: {
+          // 发布评论所需要的参数
           content: this.textarea,
           post: Number(this.$route.query.id),
-          pics: this.imageUrl
+          pics: this.imageUrl,
+          score: this.socreList || {},
+          follow: this.followList || null
         }
       }).then(res => {
-        console.log(res);
+        this.textarea = "";
+        this.imageUrl = [];
+        this.handleFileList = [];
+        this.remarkList = "";
+        this.getComment();
         this.$message.success("发表成功");
       });
-      console.log(this.textarea);
-      console.log(this.imageUrl);
+    },
+
+    /**
+     * 回复功能
+     */
+    getRemark(data) {
+      console.log(data);
+      this.remarkList = data;
+      this.socreList = this.remarkList.account;
+      this.followList = this.remarkList.id;
+      this.$refs.remake.focus();
     }
   },
   mounted() {
@@ -314,6 +346,15 @@ export default {
   }
 
   .comment {
+    .remark {
+      padding: 5px;
+      border: 1px solid #e0e0e3;
+      border-radius: 5px;
+      background: #f4f4f5;
+      color: #909399;
+      font-size: 12px;
+      display: inline-block;
+    }
     p {
       margin: 10px 0;
     }

@@ -2,29 +2,18 @@
   <section class="selector">
     <el-row>
       <el-col :span="6">
-        <div class="grid-content bg-purple">
+        <div class="price">
           <div>
-            价格：
+            <span>价格</span>
             <span>0-4000</span>
           </div>
-          <el-slider v-model="price"></el-slider>
+          <!-- <el-slider v-model="price"></el-slider> -->
+          <el-slider v-model="price" :format-tooltip="formatTooltip"></el-slider>
         </div>
       </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple-light">
-          <div>住宿等级</div>
-          <el-select v-model="grade" class="select" placeholder="请选择">
-            <el-option
-              v-for="(item,index) in levels"
-              :key="index"
-              :label="item.level"
-              :value="item.name"
-            ></el-option>
-          </el-select>
-        </div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple">
+
+      <el-col :span="18" class="tiaoJian">
+         <div class="grid-content bg-purple">
           <div>住宿类型</div>
           <el-select v-model="type" class="select" placeholder="请选择">
             <el-option
@@ -35,8 +24,19 @@
             ></el-option>
           </el-select>
         </div>
-      </el-col>
-      <el-col :span="4">
+
+         <div class="grid-content bg-purple-light">
+          <div>住宿等级</div>
+          <el-select v-model="grade" class="select" placeholder="请选择">
+            <el-option
+              v-for="(item,index) in levels"
+              :key="index"
+              :label="item.level"
+              :value="item.name"
+            ></el-option>
+          </el-select>
+        </div>
+
         <div class="grid-content bg-purple-light">
           <div>酒店设施</div>
           <el-select v-model="facility" class="select" placeholder="请选择">
@@ -48,8 +48,7 @@
             ></el-option>
           </el-select>
         </div>
-      </el-col>
-      <el-col :span="4">
+
         <div class="grid-content bg-purple">
           <div>酒店品牌</div>
           <el-select v-model="brand" class="select" placeholder="请选择">
@@ -145,24 +144,36 @@ export default {
   },
 
   mounted () { },
-  methods: {}
+  methods: {
+    //换条价格
+    formatTooltip(val){
+      return val *40
+    }
+  }
 }
 </script>
 
 <style scoped lang="less">
 .el-row {
+  font-size:14px;
+  color:#666;
   padding: 10px;
   margin-top: 20px;
   border: 1px solid #dcdfe6;
-  .el-col {
-    height: 100%;
-    border-right: 1px solid #dcdfe6;
-    padding: 0 10px;
-    .grid-content {
-      .el-select {
-        border: 0;
-        background: #fff;
-      }
+  .price{
+    padding:0 15px;
+    div{
+      display:flex;
+      justify-content: space-between;
+    }
+  }
+  .tiaoJian{
+    display:flex;
+    justify-content: space-around;
+    .grid-content{
+      padding:0 15px;
+      border-left:1px solid #dcdfe6;
+    
     }
   }
 }
