@@ -12,6 +12,10 @@
               <img v-for="(a,i) in item.pics" :key="i" :src="$axios.defaults.baseURL + a.url" alt="">
           </div>
         <div class="commentContent">{{item.content}}</div>
+        <div class="iconfontList">
+          <i class="iconfont icon-dianzan"></i>
+          <span>点赞数：</span>
+        </div>
         <a href="javascript:;" ref="aDom" v-show="blockShow" @click="postRemark(item)">回复</a>
       </div>
     </div>
@@ -89,6 +93,10 @@ export default {
     position: absolute;
     right: 20px;
     display: none;
+  }
+  .iconfontList{
+    position: absolute;
+    right: 60px;
   }
 }
 img {

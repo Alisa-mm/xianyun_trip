@@ -95,7 +95,7 @@
 
         <!-- 右边 -->
         <el-col :span="7">
-          <div class="grid-content bg-purple">相关攻略</div>
+          <Strategy :total="total" :praise="commentContent" />
         </el-col>
       </el-row>
     </div>
@@ -104,8 +104,9 @@
 
 <script>
 import Comment from "@/components/post/comment";
+import Strategy from "@/components/post/strategy";
 export default {
-  components: { Comment },
+  components: { Comment, Strategy },
   data() {
     return {
       dialogImageUrl: "",
@@ -236,14 +237,35 @@ export default {
     getRemark(data) {
       console.log(data);
       this.remarkList = data;
-      this.socreList = this.remarkList.account;
-      this.followList = this.remarkList.id;
-      this.$refs.remake.focus();
+      this.socreList = this.remarkList.account; // 回复对象数据
+      this.followList = this.remarkList.id; // 回复对象id
+      this.$refs.remake.focus(); // 获取评论框焦点
+    },
+
+    /**
+     * 获取评论点赞数
+     */
+    getCommentLike() {
+      this.$axios({
+        url: "/comments/like",
+        params: {
+          id: 4619
+        },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ` + this.$store.state.user.userInfo.token
+        }
+      }).then(res => {
+        console.log(res);
+      });
     }
   },
   mounted() {
     this.getContent();
     this.getComment();
+    this.getCommentLike();
+    this.$store.commit("post/setRemake", this.$refs.remake.focus);
+    // console.log(this.$refs.remake.focus);
   }
 };
 </script>
