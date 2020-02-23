@@ -4,9 +4,11 @@
     <el-row class="search-bar"
             type="flex">
       <input type="text"
+             ref="input"
              style="outline:none"
              placeholder="请输入想去的地方，比如：'广州'"
-             v-model="city">
+             v-model="city"
+             @keyup.enter="handleClick">
       <i class="el-icon-search"
          @click="handleClick"></i>
     </el-row>
@@ -17,6 +19,7 @@
          @click="advance('上海')">上海 </a><a href="JavaScript:void(0)"
          @click="advance('北京')">北京</a>
     </div>
+    {{updateName}}
   </div>
 </template>
 
@@ -28,6 +31,12 @@ export default {
       state4: '',
       timeout: null,
       city: ""
+    }
+  },
+  computed: {
+    updateName () {
+      this.city = this.$store.state.post.city;
+      return '';
     }
   },
   methods: {
@@ -48,6 +57,7 @@ export default {
           city: city
         }
       })
+      this.$refs.input.value = city;
     }
   }
 }
