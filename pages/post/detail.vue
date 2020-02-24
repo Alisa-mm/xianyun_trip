@@ -95,7 +95,7 @@
 
         <!-- 右边 -->
         <el-col :span="7">
-          <Strategy :total="total" :praise="commentContent" />
+          <Strategy :total="total" />
         </el-col>
       </el-row>
     </div>
