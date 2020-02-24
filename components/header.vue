@@ -30,8 +30,12 @@
                   align="middle"
                   class="el-dropdown-link">
             <nuxt-link to="#">
-
+              <img :src="$axios.defaults.baseURL + $store.state.user.userInfo.user.defaultAvatar"
+                   width="36px"
+                   height="36px"
+                   style="margin-right:6px" />
             </nuxt-link>
+            {{$store.state.user.userInfo.user.nickname}}
             <i class="el-icon-caret-bottom el-icon--right"></i>
           </el-row>
           <el-dropdown-menu slot="dropdown">

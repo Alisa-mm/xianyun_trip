@@ -11,6 +11,7 @@
             @mouseleave="handleLeave(index)">
           <el-row class="el-dropdown-link"
                   type="flex"
+                  ref="link"
                   justify="space-between"
                   style="line-height:41px">
             {{item.type}}<i class="el-icon-arrow-right el-icon--right"
@@ -19,8 +20,8 @@
         </li>
         <div class="box"
              v-if="isShow"
-             @mouseenter="keepShow"
-             @mouseleave="keepnoShow">
+             @mouseenter="keepShow(num)"
+             @mouseleave="keepnoShow(num)">
           <ul>
             <li v-for="(item,index) in menus[index].children"
                 :key="index">
@@ -52,7 +53,8 @@ export default {
     return {
       menus: {},
       isShow: false,
-      index: null
+      index: null,
+      num: null
     }
   },
   mounted () {
@@ -66,16 +68,20 @@ export default {
   methods: {
     handleEnter (index) {
       this.isShow = true
-      this.index = index
+      this.index = index;
+      this.num = index;
     },
     handleLeave (index) {
       this.isShow = false
     },
-    keepShow () {
+    keepShow (num) {
       this.isShow = true
+      // console.log(this.$refs.link[1])
+      this.$refs.link[num].style.borderRight = `1px solid #fff`
     },
-    keepnoShow () {
-      this.isShow = false
+    keepnoShow (num) {
+      this.isShow = false;
+      this.$refs.link[num].style.borderRight = ""
     },
     handleClick (city) {
       this.$store.commit("post/setCity", city)
