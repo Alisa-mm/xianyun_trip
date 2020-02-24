@@ -242,30 +242,29 @@ export default {
       this.$refs.remake.focus(); // 获取评论框焦点
     },
 
-    /**
-     * 获取评论点赞数
-     */
-    getCommentLike() {
-      this.$axios({
-        url: "/comments/like",
-        params: {
-          id: 4619
-        },
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ` + this.$store.state.user.userInfo.token
-        }
-      }).then(res => {
-        console.log(res);
-      });
-    }
+    // /**
+    //  * 获取评论点赞数
+    //  */
+    // getCommentLike() {
+    //   this.$axios({
+    //     url: "/comments/like",
+    //     params: {
+    //       id: 4619
+    //     },
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ` + this.$store.state.user.userInfo.token
+    //     }
+    //   }).then(res => {
+    //     console.log(res);
+    //   });
+    // },
   },
   mounted() {
     this.getContent();
     this.getComment();
-    this.getCommentLike();
+    // this.getCommentLike();
     this.$store.commit("post/setRemake", this.$refs.remake.focus);
-    // console.log(this.$refs.remake.focus);
   }
 };
 </script>

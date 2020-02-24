@@ -23,14 +23,10 @@
           v-model="NumberValue"
           class="NumberPeople"
           @click.native="handleHidden()"
-         
         ></el-input>
-        <el-card 
-        shadow="always" 
-        class="el-card" 
-        v-if="isShow">
+        <el-card shadow="always" class="el-card" v-if="isShow">
           <span>每件</span>
-          <el-select v-model="value" placeholder="成人">
+          <el-select class="select" v-model="adult" placeholder="成人">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -39,7 +35,7 @@
             ></el-option>
           </el-select>
 
-          <el-select v-model="value" placeholder="儿童">
+          <el-select v-model="child" placeholder="儿童">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -50,7 +46,7 @@
 
           <div class="hr"></div>
 
-          <el-button type="primary">确定</el-button>
+          <el-button type="primary" @click="handleClose">确定</el-button>
         </el-card>
       </div>
 
@@ -65,27 +61,32 @@ export default {
     return {
       CityValue: "",  //切换城市
       stayTime: "",    //入住时间
-      NumberValue: "", //人数
-      value: "",
+      NumberValue: [], //人数
+      adult: "",   //成人
+      child: "",    //儿童
       isShow: false,
 
       //模拟的数据
       options: [
         {
-          label: "1",
-          value: "1"
+          label: 1,
+          value: 1
         },
         {
-          label: "2",
-          value: "2"
+          label: 2,
+          value: 2
         },
         {
-          label: "3",
-          value: "3"
+          label: 3,
+          value: 3
         },
         {
-          label: "4",
-          value: "4"
+          label: 4,
+          value: 4
+        },
+        {
+          label: 5,
+          value: 5
         },
       ],
 
@@ -104,9 +105,13 @@ export default {
       //改变isShow的值
       this.isShow = !this.isShow;
     },
-    //失去焦点时触发
-    oninputBlur(){
-      this.isShow = false;
+    //失去焦点时触发画板隐藏
+    // handleBlur () {
+    //   this.isShow = false;
+    // },
+    handleClose(){
+      // console.log(111);
+      this.NumberValue.splice(0,2,this.adult,this.child)
     },
     // 筛选
     handleClick () {
@@ -148,10 +153,11 @@ export default {
       right: -80px;
       // display: none;
       width: 300px;
-      height: 200px;
-      z-index: 2368;
+      height: 150px;
+      z-index: 2000;
       .el-select {
         width: 100px;
+        
       }
       .hr {
         margin: 20px 0;
@@ -174,4 +180,6 @@ export default {
     font-size: 14px;
   }
 }
+
+
 </style>

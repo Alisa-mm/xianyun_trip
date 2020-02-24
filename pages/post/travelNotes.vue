@@ -6,7 +6,7 @@
       <div class="main">
         <h2>发表新攻略</h2>
         <p>分享你的个人游记，让更多人看到哦!</p>
-        <el-form ref="form" :model="form" label-width="80px" :rules="rules">
+        <el-form ref="form" :model="form" label-width="100px" :rules="rules">
           <!-- 标题 -->
           <el-form-item prop="title">
             <el-input placeholder="请输入标题" v-model="form.title"></el-input>
@@ -14,7 +14,7 @@
           <!-- vu2-editor 编辑器 -->
           <el-form-item class="quillWrapper" prop="content">
             <client-only>
-              <vue-editor v-model="form.content"></vue-editor>
+              <vue-editor  v-model="form.content"></vue-editor>
             </client-only>
           </el-form-item>
           <!-- 选择城市 -->
@@ -214,22 +214,22 @@ export default {
 
 <style scoped lang="less">
 .container {
-  width: 1000px;
+  width: 1200px;
   margin: 0 auto;
   padding: 20px 0;
   .main {
     h2 {
       font-weight: normal;
       font-size: 22px;
-      margin: 0 0 10px 80px;
+      margin: 0 0 10px 98px;
     }
     p {
       font-size: 12px;
       color: #999;
-      margin: 0 0 10px 80px;
+      margin: 0 0 10px 98px;
     }
     .quillWrapper {
-      height: 400px;
+      height: 350px;
     }
     .checkCity {
       margin-top: 110px;

@@ -8,14 +8,14 @@
       </div>
       <ComModule v-if="item.parent" :data="item.parent" />
       <div @mouseenter="mouseHover" @mouseleave="mouseLeave">
-          <div class="commentImage">
-              <img v-for="(a,i) in item.pics" :key="i" :src="$axios.defaults.baseURL + a.url" alt="">
-          </div>
-        <div class="commentContent">{{item.content}}</div>
-        <div class="iconfontList">
-          <i class="iconfont icon-dianzan"></i>
-          <span>点赞数：</span>
+        <div class="commentImage">
+          <img v-for="(a,i) in item.pics" :key="i" :src="$axios.defaults.baseURL + a.url" alt />
         </div>
+        <div class="commentContent">{{item.content}}</div>
+        <!-- <div class="iconfontList">
+          <i class="iconfont icon-dianzan" @click="dianzan(item.id)"></i>
+          <span>点赞数：</span>
+        </div> -->
         <a href="javascript:;" ref="aDom" v-show="blockShow" @click="postRemark(item)">回复</a>
       </div>
     </div>
@@ -41,7 +41,20 @@ export default {
     mouseLeave(i) {
       this.blockShow = false;
     },
-
+    //点赞
+    // dianzan(id) {
+    //   this.$axios({
+    //     url: "/comments/like",
+    //     headers: {
+    //       Authorization: `Bearer ` + this.$store.state.user.userInfo.token
+    //     },
+    //     params: {
+    //       id
+    //     }
+    //   }).then(res => {
+    //     this.$message.success(res.data.message);
+    //   });
+    // },
     /**
      * 发出监听事件，传值到父组件
      */
@@ -94,13 +107,13 @@ export default {
     right: 20px;
     display: none;
   }
-  .iconfontList{
+  .iconfontList {
     position: absolute;
     right: 60px;
   }
 }
 img {
   display: inline-block;
-    max-width: 100px;
-  }
+  max-width: 100px;
+}
 </style>

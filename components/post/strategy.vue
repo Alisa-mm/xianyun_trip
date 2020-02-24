@@ -3,7 +3,7 @@
     <div class="headerWrap">
       <div class="headerWrapBox">
         <div class="headerBox" v-for="(item, index) in iconfontList" :key="index">
-          <i class="iconfont" :class="item.class" @click="getRemake"></i>
+          <i class="iconfont" :class="item.class" @click="getRemake(index)"></i>
           <span>{{item.totalList}}</span>
         </div>
       </div>
@@ -24,9 +24,19 @@
 
     <p>攻略目录</p>
     <div style="height: 300px;">
-      <el-steps direction="vertical" :active="1">
-        <el-step v-for="(item, index) in recommendList" :key="index" :title="item.title"></el-step>
+      <el-steps direction="vertical" :active="active">
+        <el-step
+          v-for="(item, index) in recommendList"
+          :key="index"
+          :title="item.title"
+        ></el-step>
       </el-steps>
+      <!-- <el-timeline>
+        <el-timeline-item
+          v-for="(item, index) in recommendList"
+          :key="index"
+        ><p @click="handleClick(item.id)">{{item.title}}</p></el-timeline-item>
+      </el-timeline> -->
     </div>
   </div>
 </template>
@@ -44,18 +54,34 @@ export default {
           totalList: this.total
         },
         {
-          class: "icon-xingxing",
-        //   totalList: this.commentContent
+          class: "icon-xingxing"
+          //   totalList: this.commentContent
         }
-      ] // 字体图标
+      ], // 字体图标
+      active: 2
     };
   },
   methods: {
     /**
      *  点击获取评论框焦点
      */
-    getRemake() {
-      this.$store.state.post.remake();
+    getRemake(index) {
+      if (index === 0) {
+        this.$store.state.post.remake();
+      }
+      /* if (index === 1) {
+        this.$axios({
+          url: "/posts/star",
+          headers: {
+            Authorization: `Bearer ` + this.$store.state.user.userInfo.token
+          },
+          params: {
+            id: this.$route.query.id
+          }
+        }).then(res => {
+          this.$message.error(res.data.message);
+        });
+      } */
     },
 
     /**
@@ -65,8 +91,16 @@ export default {
       this.$axios({
         url: "/posts/recommend"
       }).then(res => {
+        console.log(res);
         this.recommendList = res.data.data;
       });
+    },
+    /**
+     *  点击相关功略跳转页面
+     */
+    handleClick(data) {
+      console.log(1);
+      this.$router.push({path:'detail', params:{id: 4}});
     }
   },
   mounted() {
