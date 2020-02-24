@@ -20,8 +20,8 @@
         </li>
         <div class="box"
              v-if="isShow"
-             @mouseenter="keepShow(num)"
-             @mouseleave="keepnoShow(num)">
+             @mouseenter="keepShow(index)"
+             @mouseleave="keepnoShow(index)">
           <ul>
             <li v-for="(item,index) in menus[index].children"
                 :key="index">
@@ -53,8 +53,7 @@ export default {
     return {
       menus: {},
       isShow: false,
-      index: null,
-      num: null
+      index: null
     }
   },
   mounted () {
@@ -69,19 +68,18 @@ export default {
     handleEnter (index) {
       this.isShow = true
       this.index = index;
-      this.num = index;
     },
     handleLeave (index) {
       this.isShow = false
     },
-    keepShow (num) {
+    keepShow (index) {
       this.isShow = true
       // console.log(this.$refs.link[1])
-      this.$refs.link[num].style.borderRight = `1px solid #fff`
+      this.$refs.link[index].style.borderRight = `1px solid #fff`
     },
-    keepnoShow (num) {
+    keepnoShow (index) {
       this.isShow = false;
-      this.$refs.link[num].style.borderRight = ""
+      this.$refs.link[index].style.borderRight = ""
     },
     handleClick (city) {
       this.$store.commit("post/setCity", city)
