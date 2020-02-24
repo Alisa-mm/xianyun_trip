@@ -97,7 +97,9 @@ export default {
     goHotelDetail (id) {
       console.log(id);
       this.$router.push({ path: `/hotel/detail/${id}` })
-    }
+    },
+
+    
   }
 
 }

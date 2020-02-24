@@ -110,7 +110,7 @@ export default {
     //   this.isShow = false;
     // },
     handleClose(){
-      // console.log(111);
+      this.isShow = false;
       this.NumberValue.splice(0,2,this.adult,this.child)
     },
     // 筛选
